@@ -1,6 +1,7 @@
 import "../css/style.css";
 import MainNav from "./MainNav";
 import MainCenterBlock from "./MainCenterBlock";
+import MainSidebar from "./MainSidebar";
 
 function Container() {
   return (
@@ -8,6 +9,7 @@ function Container() {
       <main className="main">
         <MainNav />
         <MainCenterBlock />
+        <MainSidebar />
       </main>
     </div>
   );
