@@ -37,7 +37,7 @@ body {
   width: 100%;
   height: 100%;
   font-family: "StratosSkyeng", sans-serif;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .wrapper {
@@ -56,33 +56,33 @@ body {
 }
 
 ._btn-text:hover {
-  border-color: #D9B6FF;
-  color: #D9B6FF;
+  border-color: #d9b6ff;
+  color: #d9b6ff;
   cursor: pointer;
 }
 
 ._btn-icon:hover svg {
   fill: transparent;
-  stroke: #ACACAC;
+  stroke: #acacac;
   cursor: pointer;
 }
 
 ._btn-text:active {
-  border-color: #AD61FF;
-  color: #AD61FF;
+  border-color: #ad61ff;
+  color: #ad61ff;
   cursor: pointer;
 }
 
 ._btn-icon:active svg {
   fill: transparent;
-  stroke: #FFFFFF;
+  stroke: #ffffff;
   cursor: pointer;
 }
 
 ._btn-icon:active .track-play__like-svg,
 ._btn-icon:active .track-play__dislike-svg {
   fill: #696969;
-  stroke: #FFFFFF;
+  stroke: #ffffff;
   cursor: pointer;
 }
 
@@ -97,7 +97,7 @@ body {
   background-color: #181818;
   padding: 20px 0 20px 36px;
 }
-.main__centerblock {
+.main__centerBlock {
   width: auto;
   flex-grow: 3;
   padding: 20px 40px 20px 111px;
@@ -137,7 +137,7 @@ body {
   display: inline-block;
   width: 100%;
   height: 1px;
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
 }
 
 .menu__list {
@@ -148,21 +148,21 @@ body {
   margin-bottom: 16px;
 }
 .menu__link {
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
 }
 
-.centerblock__search {
+.centerBlock__search {
   width: 100%;
-  border-bottom: 1px solid #4E4E4E;
+  border-bottom: 1px solid #4e4e4e;
   margin-bottom: 51px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.centerblock__h2 {
+.centerBlock__h2 {
   font-style: normal;
   font-weight: 400;
   font-size: 64px;
@@ -170,13 +170,13 @@ body {
   letter-spacing: -0.8px;
   margin-bottom: 45px;
 }
-.centerblock__filter {
+.centerBlock__filter {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 51px;
 }
-.centerblock__content {
+.centerBlock__content {
   display: flex;
   flex-direction: column;
 }
@@ -185,7 +185,7 @@ body {
   width: 17px;
   height: 17px;
   margin-right: 5px;
-  stroke: #FFFFFF;
+  stroke: #ffffff;
   fill: transparent;
 }
 .search__text {
@@ -197,11 +197,11 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .search__text::-moz-placeholder {
   background-color: transparent;
-  color: #FFFFFF;
+  color: #ffffff;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -209,7 +209,7 @@ body {
 }
 .search__text::placeholder {
   background-color: transparent;
-  color: #FFFFFF;
+  color: #ffffff;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -228,7 +228,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
 }
@@ -314,21 +314,21 @@ body {
   width: 18px;
   height: 17px;
   fill: transparent;
-  stroke: #4E4E4E;
+  stroke: #4e4e4e;
 }
 .track__title-link {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .track__title-span {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #4E4E4E;
+  color: #4e4e4e;
 }
 .track__author {
   width: 321px;
@@ -340,7 +340,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: left;
 }
 .track__album {
@@ -381,7 +381,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-right: 16px;
 }
 .sidebar__avatar {
@@ -433,7 +433,7 @@ body {
 .bar__player-progress {
   width: 100%;
   height: 5px;
-  background: #2E2E2E;
+  background: #2e2e2e;
 }
 .bar__player-block {
   height: 73px;
@@ -477,7 +477,7 @@ body {
 .player__btn-play-svg {
   width: 22px;
   height: 20px;
-  fill: #D9D9D9;
+  fill: #d9d9d9;
 }
 .player__btn-next {
   margin-right: 28px;
@@ -487,7 +487,7 @@ body {
   width: 15px;
   height: 14px;
   fill: inherit;
-  stroke: #D9D9D9;
+  stroke: #d9d9d9;
 }
 .player__btn-repeat {
   margin-right: 24px;
@@ -534,7 +534,7 @@ body {
   width: 18px;
   height: 17px;
   fill: transparent;
-  stroke: #4E4E4E;
+  stroke: #4e4e4e;
 }
 .track-play__author {
   grid-area: author;
@@ -545,7 +545,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   white-space: nowrap;
 }
 .track-play__album {
@@ -557,7 +557,7 @@ body {
   font-weight: 400;
   font-size: 13px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .track-play__like-dis {
   display: flex;
@@ -588,7 +588,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .volume__image {
   width: 13px;

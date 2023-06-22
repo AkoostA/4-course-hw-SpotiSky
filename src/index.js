@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import MainNav from "./components/MainNav";
+import Container from "./components/Container";
 
 const root = ReactDOM.createRoot(document.querySelector(".wrapper"));
+
 root.render(
   <React.StrictMode>
-    <MainNav />
+    <Container />
   </React.StrictMode>
 );
