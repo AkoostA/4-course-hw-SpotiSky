@@ -2,6 +2,7 @@ import "../css/style.css";
 import MainNav from "./MainNav";
 import MainCenterBlock from "./MainCenterBlock";
 import MainSidebar from "./MainSidebar";
+import Bar from "./Bar";
 
 function Container() {
   return (
@@ -11,6 +12,9 @@ function Container() {
         <MainCenterBlock />
         <MainSidebar />
       </main>
+      <div className="bar">
+        <Bar />
+      </div>
     </div>
   );
 }
