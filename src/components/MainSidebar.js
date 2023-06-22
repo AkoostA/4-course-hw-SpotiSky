@@ -1,7 +1,7 @@
 import "../css/style.css";
-import playListOne from "../img/playlist01.png"
-import playListTwo from "../img/playlist02.png"
-import playListThree from "../img/playlist03.png"
+import playListOne from "../img/playlist01.png";
+import playListTwo from "../img/playlist02.png";
+import playListThree from "../img/playlist03.png";
 
 const sidebarPersonal = (
   <div className="sidebar__personal">

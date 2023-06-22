@@ -1,8 +1,8 @@
 import "../css/style.css";
 import iconSearch from "../img/icon/search.svg";
 import iconWatch from "../img/icon/watch.svg";
-import iconNote from "../img/icon/note.svg"
-import iconLike from "../img/icon/like.svg"
+import iconNote from "../img/icon/note.svg";
+import iconLike from "../img/icon/like.svg";
 
 const centerBlockSearch = (
   <div className="centerBlock__search search">

@@ -1,13 +1,13 @@
 import "../css/style.css";
-import iconPrev from "../img/icon/prev.svg"
-import iconPlay from "../img/icon/play.svg"
-import iconNext from "../img/icon/next.svg"
-import iconRepeat from "../img/icon/repeat.svg"
-import iconShuffle from "../img/icon/shuffle.svg"
-import iconNote from "../img/icon/note.svg"
-import iconLike from "../img/icon/like.svg"
-import iconDislike from "../img/icon/dislike.svg"
-import iconVolume from "../img/icon/volume.svg"
+import iconPrev from "../img/icon/prev.svg";
+import iconPlay from "../img/icon/play.svg";
+import iconNext from "../img/icon/next.svg";
+import iconRepeat from "../img/icon/repeat.svg";
+import iconShuffle from "../img/icon/shuffle.svg";
+import iconNote from "../img/icon/note.svg";
+import iconLike from "../img/icon/like.svg";
+import iconDislike from "../img/icon/dislike.svg";
+import iconVolume from "../img/icon/volume.svg";
 
 const barPlayerProgress = <div className="bar__player-progress" />;
 

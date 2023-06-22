@@ -1,5 +1,5 @@
 import "../css/style.css";
-import logo from "../img/logo.png"
+import logo from "../img/logo.png";
 
 const navLogo = (
   <div className="nav__logo logo">
