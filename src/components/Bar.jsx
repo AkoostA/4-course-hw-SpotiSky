@@ -1,13 +1,5 @@
 import "../css/style.css";
-import iconPrev from "../img/icon/prev.svg";
-import iconPlay from "../img/icon/play.svg";
-import iconNext from "../img/icon/next.svg";
-import iconRepeat from "../img/icon/repeat.svg";
-import iconShuffle from "../img/icon/shuffle.svg";
-import iconNote from "../img/icon/note.svg";
-import iconLike from "../img/icon/like.svg";
-import iconDislike from "../img/icon/dislike.svg";
-import iconVolume from "../img/icon/volume.svg";
+import sprite from "../img/icon/sprite.svg"
 
 const barPlayerProgress = <div className="bar__player-progress" />;
 
@@ -16,27 +8,27 @@ const barPlayer = (
     <div className="player__controls">
       <div className="player__btn-prev">
         <svg className="player__btn-prev-svg" alt="prev">
-          <use xlinkHref={iconPrev} />
+          <use xlinkHref={`${sprite}#icon-prev`} />
         </svg>
       </div>
       <div className="player__btn-play _btn">
         <svg className="player__btn-play-svg" alt="play">
-          <use xlinkHref={iconPlay} />
+          <use xlinkHref={`${sprite}#icon-play`} />
         </svg>
       </div>
       <div className="player__btn-next">
         <svg className="player__btn-next-svg" alt="next">
-          <use xlinkHref={iconNext} />
+          <use xlinkHref={`${sprite}#icon-next`} />
         </svg>
       </div>
       <div className="player__btn-repeat _btn-icon">
         <svg className="player__btn-repeat-svg" alt="repeat">
-          <use xlinkHref={iconRepeat} />
+          <use xlinkHref={`${sprite}#icon-repeat`} />
         </svg>
       </div>
       <div className="player__btn-shuffle _btn-icon">
         <svg className="player__btn-shuffle-svg" alt="shuffle">
-          <use xlinkHref={iconShuffle} />
+          <use xlinkHref={`${sprite}#icon-shuffle`} />
         </svg>
       </div>
     </div>
@@ -44,7 +36,7 @@ const barPlayer = (
       <div className="track-play__contain">
         <div className="track-play__image">
           <svg className="track-play__svg" alt="music">
-            <use xlinkHref={iconNote} />
+            <use xlinkHref={`${sprite}#icon-note`} />
           </svg>
         </div>
         <div className="track-play__author">
@@ -61,12 +53,12 @@ const barPlayer = (
       <div className="track-play__like-dis">
         <div className="track-play__like _btn-icon">
           <svg className="track-play__like-svg" alt="like">
-            <use xlinkHref={iconLike} />
+            <use xlinkHref={`${sprite}#icon-like`} />
           </svg>
         </div>
         <div className="track-play__dislike _btn-icon">
           <svg className="track-play__dislike-svg" alt="dislike">
-            <use xlinkHref={iconDislike} />
+            <use xlinkHref={`${sprite}#icon-dislike`} />
           </svg>
         </div>
       </div>
@@ -79,7 +71,7 @@ const barVolume = (
     <div className="volume__content">
       <div className="volume__image">
         <svg className="volume__svg" alt="volume">
-          <use xlinkHref={iconVolume} />
+          <use xlinkHref={`${sprite}#icon-volume`} />
         </svg>
       </div>
       <div className="volume__progress _btn">

@@ -1,13 +1,10 @@
 import "../css/style.css";
-import iconSearch from "../img/icon/search.svg";
-import iconWatch from "../img/icon/watch.svg";
-import iconNote from "../img/icon/note.svg";
-import iconLike from "../img/icon/like.svg";
+import sprite from "../img/icon/sprite.svg"
 
 const centerBlockSearch = (
   <div className="centerBlock__search search">
-    <svg className="search__svg">
-      <use xlinkHref={iconSearch} />
+    <svg className="search__svg" alt="search">
+      <use xlinkHref={`${sprite}#icon-search`} />
     </svg>
     <input
       className="search__text"
@@ -34,7 +31,7 @@ const contentTitle = (
     <div className="playlist-title__col col03">АЛЬБОМ</div>
     <div className="playlist-title__col col04">
       <svg className="playlist-title__svg" alt="time">
-        <use xlinkHref={iconWatch} />
+        <use xlinkHref={`${sprite}#icon-watch`} />
       </svg>
     </div>
   </div>
@@ -46,7 +43,7 @@ const contentPlaylist = (
       <div className="track__title">
         <div className="track__title-image">
           <svg className="track__title-svg" alt="music">
-            <use xlinkHref={iconNote} />
+            <use xlinkHref={`${sprite}#icon-note`} />
           </svg>
         </div>
         <div className="track__title-text">
@@ -67,7 +64,7 @@ const contentPlaylist = (
       </div>
       <div className="track__time">
         <svg className="track__time-svg" alt="time">
-          <use xlinkHref={iconLike} />
+          <use xlinkHref={`${sprite}#icon-like`} />
         </svg>
         <span className="track__time-text">4:44</span>
       </div>
