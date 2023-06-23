@@ -1,5 +1,5 @@
 import "../css/style.css";
-import sprite from "../img/icon/sprite.svg"
+import sprite from "../img/icon/sprite.svg";
 
 const centerBlockSearch = (
   <div className="centerBlock__search search">

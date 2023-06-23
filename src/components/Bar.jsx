@@ -1,5 +1,5 @@
 import "../css/style.css";
-import sprite from "../img/icon/sprite.svg"
+import sprite from "../img/icon/sprite.svg";
 
 const barPlayerProgress = <div className="bar__player-progress" />;
 
