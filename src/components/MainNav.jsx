@@ -1,17 +1,11 @@
 import "../css/style.css";
+import { useState } from "react";
 import logo from "../img/logo.png";
+import sprite from "../img/icon/sprite.svg"
 
 const navLogo = (
   <div className="nav__logo logo">
     <img className="logo__image" src={logo} alt="logo" />
-  </div>
-);
-
-const navBurger = (
-  <div className="nav__burger burger">
-    <span className="burger__line" />
-    <span className="burger__line" />
-    <span className="burger__line" />
   </div>
 );
 
@@ -38,11 +32,17 @@ const navMenu = (
 );
 
 function MainNav() {
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisibility = () => setVisible(!visible);
+
   return (
     <nav className="main__nav nav">
       {navLogo}
-      {navBurger}
-      {navMenu}
+      <svg onClick={toggleVisibility} className="nav__burger burger">
+        <use xlinkHref={`${sprite}#icon-burger`} />
+      </svg>
+      {visible && navMenu}
     </nav>
   );
 }
