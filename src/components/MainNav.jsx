@@ -35,6 +35,12 @@ function MainNav() {
 
   const toggleVisibility = () => setVisible(!visible);
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      toggleVisibility();
+    }
+  };
+
   return (
     <nav className="main__nav nav">
       {navLogo}
@@ -42,7 +48,7 @@ function MainNav() {
         onClick={toggleVisibility}
         role="button"
         tabIndex={0}
-        onKeyDown={toggleVisibility}
+        onKeyDown={handleKeyDown}
         className="nav__burger burger"
       >
         <span className="burger__line" />
