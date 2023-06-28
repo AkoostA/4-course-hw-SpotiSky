@@ -1,7 +1,6 @@
 import "../css/style.css";
 import { useState } from "react";
 import logo from "../img/logo.png";
-import sprite from "../img/icon/sprite.svg"
 
 const navLogo = (
   <div className="nav__logo logo">
@@ -39,9 +38,17 @@ function MainNav() {
   return (
     <nav className="main__nav nav">
       {navLogo}
-      <svg onClick={toggleVisibility} className="nav__burger burger">
-        <use xlinkHref={`${sprite}#icon-burger`} />
-      </svg>
+      <div
+        onClick={toggleVisibility}
+        role="button"
+        tabIndex={0}
+        onKeyDown={toggleVisibility}
+        className="nav__burger burger"
+      >
+        <span className="burger__line" />
+        <span className="burger__line" />
+        <span className="burger__line" />
+      </div>
       {visible && navMenu}
     </nav>
   );
