@@ -461,15 +461,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
   }
 
   &__item {
     width: 250px;
     height: 150px;
-
-    &:not(:last-child) {
-      margin-bottom: 30px;
-    }
   }
 
   &__link {
