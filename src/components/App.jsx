@@ -1,22 +1,29 @@
 import "../css/style.css";
+import { useEffect, useState } from "react";
 import MainNav from "./MainNav";
 import MainCenterBlock from "./MainCenterBlock";
 import MainSidebar from "./MainSidebar";
 import Bar from "./Bar";
 
-function Container() {
+function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 3000);
+  }, [loading]);
+
   return (
     <div className="container">
       <main className="main">
         <MainNav />
-        <MainCenterBlock />
-        <MainSidebar />
+        <MainCenterBlock loading={loading} />
+        <MainSidebar loading={loading} />
       </main>
       <div className="bar">
-        <Bar />
+        <Bar loading={loading} />
       </div>
     </div>
   );
 }
 
-export default Container;
+export default App;

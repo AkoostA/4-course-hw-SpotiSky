@@ -1,17 +1,10 @@
 import "../css/style.css";
+import { useState } from "react";
 import logo from "../img/logo.png";
 
 const navLogo = (
   <div className="nav__logo logo">
     <img className="logo__image" src={logo} alt="logo" />
-  </div>
-);
-
-const navBurger = (
-  <div className="nav__burger burger">
-    <span className="burger__line" />
-    <span className="burger__line" />
-    <span className="burger__line" />
   </div>
 );
 
@@ -38,11 +31,31 @@ const navMenu = (
 );
 
 function MainNav() {
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisibility = () => setVisible(!visible);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      toggleVisibility();
+    }
+  };
+
   return (
     <nav className="main__nav nav">
       {navLogo}
-      {navBurger}
-      {navMenu}
+      <div
+        onClick={toggleVisibility}
+        role="button"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className="nav__burger burger"
+      >
+        <span className="burger__line" />
+        <span className="burger__line" />
+        <span className="burger__line" />
+      </div>
+      {visible && navMenu}
     </nav>
   );
 }
