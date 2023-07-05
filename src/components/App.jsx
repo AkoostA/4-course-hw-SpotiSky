@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import MainNav from "./MainNav/MainNav";
 import MainCenterBlock from "./MainCenterBlock";
 import MainSidebar from "./MainSidebar/MainSidebar";
-import Bar from "./Bar";
+import MainBar from "./MainBar/MainBar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ function App() {
         <MainSidebar loading={loading} />
       </main>
       <div className="bar">
-        <Bar loading={loading} />
+        <MainBar loading={loading} />
       </div>
     </div>
   );
