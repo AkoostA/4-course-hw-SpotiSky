@@ -1,6 +1,6 @@
 import "../css/style.css";
 import { useEffect, useState } from "react";
-import MainNav from "./MainNav";
+import MainNav from "./MainNav/MainNav";
 import MainCenterBlock from "./MainCenterBlock";
 import MainSidebar from "./MainSidebar";
 import Bar from "./Bar";

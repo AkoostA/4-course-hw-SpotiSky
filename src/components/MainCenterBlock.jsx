@@ -108,13 +108,7 @@ const genreUl = (
 
 function MainCenterBlock({ loading }) {
   const [filter, setFilter] = useState(0);
-  const toggleFilter = (id) => {
-    if (filter === id) {
-      setFilter(0);
-      return;
-    }
-    setFilter(id);
-  };
+  const toggleFilter = (id) => setFilter(filter === id ? 0 : id);
 
   const handleKeyDownPerformer = (event) => {
     if (event.key === "Enter") {
