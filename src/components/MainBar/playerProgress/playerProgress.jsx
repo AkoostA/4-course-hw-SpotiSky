@@ -1,7 +1,7 @@
 import "../../../css/style.css";
 
-function BarProgress() {
+function PlayerProgress() {
   return <div className="bar__player-progress" />;
 }
 
-export default BarProgress;
+export default PlayerProgress;

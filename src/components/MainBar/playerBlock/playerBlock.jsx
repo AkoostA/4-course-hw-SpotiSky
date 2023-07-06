@@ -1,7 +1,7 @@
 import "../../../css/style.css";
-import PlayerControls from "./playerControls/playerControls";
-import TrackPlay from "./trackPlay/trackPlay";
-import BarVolume from "./barVolume/barVolume";
+import PlayerControls from "../playerControls/playerControls";
+import TrackPlay from "../trackPlay/trackPlay";
+import BarVolume from "../barVolume/barVolume";
 
 function PlayerBlock({ loading }) {
   return (
@@ -14,7 +14,7 @@ function PlayerBlock({ loading }) {
           <PlayerControls logo="#icon-repeat" />
           <PlayerControls logo="#icon-shuffle" />
         </div>
-        <TrackPlay loading={loading}/>
+        <TrackPlay loading={loading} />
       </div>
       <BarVolume />
     </div>

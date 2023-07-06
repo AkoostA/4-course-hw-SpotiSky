@@ -3,7 +3,7 @@ import Skeleton from "../../Skeleton";
 import playListOne from "../../../img/playlist01.png";
 import playListTwo from "../../../img/playlist02.png";
 import playListThree from "../../../img/playlist03.png";
-import SidebarItem from "./sidebarItem/sidebarItem";
+import SidebarItem from "../sidebarItem/sidebarItem";
 
 function SidebarBlock({ loading }) {
   return (

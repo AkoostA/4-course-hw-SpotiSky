@@ -1,7 +1,7 @@
-import "../../../../css/style.css";
-import Skeleton from "../../../Skeleton";
-import sprite from "../../../../img/icon/sprite.svg";
-import TrackLikeDis from "./trackLikeDis/trackLikeDis";
+import "../../../css/style.css";
+import Skeleton from "../../Skeleton";
+import sprite from "../../../img/icon/sprite.svg";
+import TrackLikeDis from "../trackLikeDis/trackLikeDis";
 
 function TrackPlay({ loading }) {
   return (

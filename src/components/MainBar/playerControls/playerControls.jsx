@@ -1,5 +1,5 @@
-import "../../../../css/style.css";
-import sprite from "../../../../img/icon/sprite.svg";
+import "../../../css/style.css";
+import sprite from "../../../img/icon/sprite.svg";
 
 function PlayerControls({ logo }) {
   return (
