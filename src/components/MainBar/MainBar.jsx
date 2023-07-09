@@ -1,10 +1,10 @@
-import "../../css/style.css";
+import style from "./MainBar.module.css";
 import PlayerProgress from "./playerProgress/playerProgress";
 import PlayerBlock from "./playerBlock/playerBlock";
 
 function MainBar({ loading }) {
   return (
-    <div className="bar__content">
+    <div className={style.bar__content}>
       <PlayerProgress />
       <PlayerBlock loading={loading} />
     </div>

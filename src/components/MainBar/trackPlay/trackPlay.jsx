@@ -1,37 +1,37 @@
-import "../../../css/style.css";
+import style from "./trackPlay.module.css";
 import Skeleton from "../../Skeleton";
 import sprite from "../../../img/icon/sprite.svg";
 import TrackLikeDis from "../trackLikeDis/trackLikeDis";
 
 function TrackPlay({ loading }) {
   return (
-    <div className="player__track-play track-play">
+    <div className={style.player__trackPlay}>
       {loading ? (
-        <div className="track-play__contain">
-          <div className="track-play__image">
+        <div className={style.trackPlay__contain}>
+          <div className={style.trackPlay__image}>
             <Skeleton w="51px" h="51px" />
           </div>
-          <div className="track-play__author">
+          <div className={style.trackPlay__author}>
             <Skeleton w="59px" h="15px" />
           </div>
-          <div className="track-play__album">
+          <div className={style.trackPlay__album}>
             <Skeleton w="59px" h="15px" />
           </div>
         </div>
       ) : (
-        <div className="track-play__contain">
-          <div className="track-play__image">
-            <svg className="track-play__svg" alt="music">
+        <div className={style.trackPlay__contain}>
+          <div className={style.trackPlay__image}>
+            <svg className={style.trackPlay__svg} alt="music">
               <use xlinkHref={`${sprite}#icon-note`} />
             </svg>
           </div>
-          <div className="track-play__author">
-            <a className="track-play__author-link" href="index.html">
+          <div className={style.trackPlay__author}>
+            <a className={style.trackPlay__authorLink} href="index.html">
               Ты та...
             </a>
           </div>
-          <div className="track-play__album">
-            <a className="track-play__album-link" href="index.html">
+          <div className={style.trackPlay__album}>
+            <a className={style.trackPlay__albumLink} href="index.html">
               Баста
             </a>
           </div>

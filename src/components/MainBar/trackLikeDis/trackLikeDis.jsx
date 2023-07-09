@@ -1,16 +1,16 @@
-import "../../../css/style.css";
+import style from "./trackLikeDis.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 
 function TrackLikeDis() {
   return (
-    <div className="track-play__like-dis">
-      <div className="track-play__like _btn-icon">
-        <svg className="track-play__like-svg" alt="like">
+    <div className={style.trackPlay__likeDis}>
+      <div className={`${style.trackPlay__like} _btn-icon`}>
+        <svg className={style.trackPlay__likeSvg} alt="like">
           <use xlinkHref={`${sprite}#icon-like`} />
         </svg>
       </div>
-      <div className="track-play__dislike _btn-icon">
-        <svg className="track-play__dislike-svg" alt="dislike">
+      <div className={`${style.trackPlay__dislike} _btn-icon`}>
+        <svg className={style.trackPlay__dislikeSvg} alt="dislike">
           <use xlinkHref={`${sprite}#icon-dislike`} />
         </svg>
       </div>
