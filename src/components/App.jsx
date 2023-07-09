@@ -1,5 +1,5 @@
-import "../css/style.css";
 import { useEffect, useState } from "react";
+import style from "./App.module.css";
 import MainNav from "./MainNav/MainNav";
 import MainCenterBlock from "./MainCenterBlock/MainCenterBlock";
 import MainSidebar from "./MainSidebar/MainSidebar";
@@ -13,13 +13,13 @@ function App() {
   }, [loading]);
 
   return (
-    <div className="container">
-      <main className="main">
+    <div className={style.container}>
+      <main className={style.main}>
         <MainNav />
         <MainCenterBlock loading={loading} />
         <MainSidebar loading={loading} />
       </main>
-      <div className="bar">
+      <div className={style.bar}>
         <MainBar loading={loading} />
       </div>
     </div>

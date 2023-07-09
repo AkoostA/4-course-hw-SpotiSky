@@ -1,10 +1,10 @@
-import "../../css/style.css";
+import style from "./MainSidebar.module.css";
 import SidebarPersonal from "./sidebarPersonal/sidebarPersonal";
 import SidebarBlock from "./sidebarBlock/sidebarBlock";
 
 function MainSidebar({ loading }) {
   return (
-    <div className="main__sidebar sidebar">
+    <div className={style.main__sidebar}>
       <SidebarPersonal />
       <SidebarBlock loading={loading} />
     </div>
