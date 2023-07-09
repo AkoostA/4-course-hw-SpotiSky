@@ -1,5 +1,5 @@
-import "../../../css/style.css";
 import { useState } from "react";
+import style from "./filterButton.module.css";
 import FilterListPerformer from "../filterListPerformer/filterListPerformer";
 import FilterListYear from "../filterListYear/filterListYear";
 import FilterListGenre from "../filerListGenre/filterListGenre";
@@ -11,9 +11,9 @@ function FilterButton() {
   const handleKeyDown = (numb) => toggleFilter(numb);
 
   return (
-    <div className="centerBlock__filter filter">
-      <div className="filter__title">Искать по:</div>
-      <div className="filter__box">
+    <div className={style.centerBlock__filter}>
+      <div className={style.filter__title}>Искать по:</div>
+      <div className={style.filter__box}>
         <div>
           <div
             onClick={() => toggleFilter(1)}
@@ -22,9 +22,9 @@ function FilterButton() {
             onKeyDown={(event) =>
               handleKeyDown(event.key === "Enter" ? 1 : null)
             }
-            className={`filter__button button-author _btn-text ${
-              filter === 1 ? "active" : null
-            }`}
+            className={
+              filter === 1 ? style.filter__buttonActive : style.filter__button
+            }
           >
             исполнителю
           </div>
@@ -38,9 +38,9 @@ function FilterButton() {
             onKeyDown={(event) =>
               handleKeyDown(event.key === "Enter" ? 2 : null)
             }
-            className={`filter__button button-author _btn-text ${
-              filter === 2 ? "active" : null
-            }`}
+            className={
+              filter === 2 ? style.filter__buttonActive : style.filter__button
+            }
           >
             году выпуска
           </div>
@@ -54,9 +54,9 @@ function FilterButton() {
             onKeyDown={(event) =>
               handleKeyDown(event.key === "Enter" ? 3 : null)
             }
-            className={`filter__button button-author _btn-text ${
-              filter === 3 ? "active" : null
-            }`}
+            className={
+              filter === 3 ? style.filter__buttonActive : style.filter__button
+            }
           >
             жанру
           </div>

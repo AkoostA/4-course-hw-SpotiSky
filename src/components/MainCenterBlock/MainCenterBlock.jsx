@@ -1,13 +1,13 @@
-import "../../css/style.css";
+import style from "./MainCenterBlock.module.css";
 import CenterBlockSearch from "./centerBlockSearch/centerBlockSearch";
 import FilterButton from "./filterButton/filterButton";
 import CenterBlockContent from "./centerBlockContent/centerBlockContent";
 
 function MainCenterBlock({ loading }) {
   return (
-    <div className="main__centerBlock centerBlock">
+    <div className={style.main__centerBlock}>
       <CenterBlockSearch />
-      <h2 className="centerBlock__h2">Треки</h2>
+      <h2 className={style.centerBlock__title}>Треки</h2>
       <FilterButton />
       <CenterBlockContent loading={loading} />
     </div>

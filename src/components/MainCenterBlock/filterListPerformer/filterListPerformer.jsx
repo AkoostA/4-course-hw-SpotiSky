@@ -1,14 +1,14 @@
-import "../../../css/style.css";
+import style from "./filterListPerformer.module.css";
 
 function FilterListPerformer() {
   return (
-    <div className="filterList">
-      <ul className="filterList__ul">
-        <li className="filterList__text">Michael Jackson</li>
-        <li className="filterList__text">Frank Sinatra</li>
-        <li className="filterList__text">Calvin Harris</li>
-        <li className="filterList__text">Zhu</li>
-        <li className="filterList__text">Arctic Monkeys</li>
+    <div className={style.filterList}>
+      <ul className={style.filterList__performer}>
+        <li className={style.filterList__text}>Michael Jackson</li>
+        <li className={style.filterList__text}>Frank Sinatra</li>
+        <li className={style.filterList__text}>Calvin Harris</li>
+        <li className={style.filterList__text}>Zhu</li>
+        <li className={style.filterList__text}>Arctic Monkeys</li>
       </ul>
     </div>
   );

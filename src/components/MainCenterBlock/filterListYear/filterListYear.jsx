@@ -1,7 +1,7 @@
-import "../../../css/style.css";
+import style from "./filterListYear.module.css";
 
 function FilterListYear() {
-  return <div className="filterList filterList__year" />;
+  return <div className={style.filterList__year} />;
 }
 
 export default FilterListYear;

@@ -1,36 +1,63 @@
-import "../../../css/style.css";
+import style from "./playListTrack.module.css";
+import Skeleton from "../../Skeleton";
 import sprite from "../../../img/icon/sprite.svg";
 
-function PlayListTrack() {
+function PlayListTrack({ loading }) {
   return (
-    <div className="playlist__track track">
-      <div className="track__title">
-        <div className="track__title-image">
-          <svg className="track__title-svg" alt="music">
-            <use xlinkHref={`${sprite}#icon-note`} />
-          </svg>
-        </div>
-        <div className="track__title-text">
-          <a className="track__title-link" href="index.html">
-            Guilt <span className="track__title-span" />
-          </a>
-        </div>
-      </div>
-      <div className="track__author">
-        <a className="track__author-link" href="index.html">
-          Nero
-        </a>
-      </div>
-      <div className="track__album">
-        <a className="track__album-link" href="index.html">
-          Welcome Reality
-        </a>
-      </div>
-      <div className="track__time">
-        <svg className="track__time-svg" alt="time">
-          <use xlinkHref={`${sprite}#icon-like`} />
-        </svg>
-        <span className="track__time-text">4:44</span>
+    <div className={style.content__playlist}>
+      <div className={style.playlist__item}>
+        {loading ? (
+          <div className={style.playlist__track}>
+            <div className={style.track__title}>
+              <div className={style.track__titleImage}>
+                <Skeleton w="51px" h="51px" />
+              </div>
+              <div className={style.titleText}>
+                <Skeleton w="356px" h="19px" />
+              </div>
+            </div>
+            <div className={style.track__author}>
+              <Skeleton w="271px" h="19px" />
+            </div>
+            <div className={style.track__album}>
+              <Skeleton w="305px" h="19px" />
+            </div>
+            <div className={style.time}>
+              <Skeleton w="60.8px" h="19px" />
+            </div>
+          </div>
+        ) : (
+          <div className={style.playlist__track}>
+            <div className={style.track__title}>
+              <div className={style.track__titleImage}>
+                <svg className={style.track__titleSvg} alt="music">
+                  <use xlinkHref={`${sprite}#icon-note`} />
+                </svg>
+              </div>
+              <div className={style.titleText}>
+                <a className={style.track__titleLink} href="index.html">
+                  Guilt <span className={style.track__titleSpan} />
+                </a>
+              </div>
+            </div>
+            <div className={style.track__author}>
+              <a className={style.track__authorLink} href="index.html">
+                Nero
+              </a>
+            </div>
+            <div className={style.track__album}>
+              <a className={style.track__albumLink} href="index.html">
+                Welcome Reality
+              </a>
+            </div>
+            <div className={style.time}>
+              <svg className={style.track__timeSvg} alt="time">
+                <use xlinkHref={`${sprite}#icon-like`} />
+              </svg>
+              <span className={style.track__timeText}>4:44</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
