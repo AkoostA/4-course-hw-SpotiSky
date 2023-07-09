@@ -1,10 +1,10 @@
-import "../../../css/style.css"
+import style from "./navLogo.module.css";
 import logo from "../../../img/logo.png";
 
 function NavLogo() {
   return (
-    <div className="nav__logo logo">
-      <img className="logo__image" src={logo} alt="logo" />
+    <div className={style.nav__logo}>
+      <img className={style.nav__image} src={logo} alt="logo" />
     </div>
   );
 }

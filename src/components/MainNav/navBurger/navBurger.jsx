@@ -1,4 +1,4 @@
-import "../../../css/style.css";
+import style from "./navBurger.module.css";
 
 function NavBurger({ toggleVisibility, handleKeyDown }) {
   return (
@@ -7,11 +7,11 @@ function NavBurger({ toggleVisibility, handleKeyDown }) {
       role="button"
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className="nav__burger burger"
+      className={style.nav__burger}
     >
-      <span className="burger__line" />
-      <span className="burger__line" />
-      <span className="burger__line" />
+      <span className={style.nav__line} />
+      <span className={style.nav__line} />
+      <span className={style.nav__line} />
     </div>
   );
 }

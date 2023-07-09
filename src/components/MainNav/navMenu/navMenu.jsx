@@ -1,21 +1,21 @@
-import "../../../css/style.css";
+import style from "./navMenu.module.css";
 
 function NavMenu() {
   return (
-    <div className="nav__menu menu">
-      <ul className="menu__list">
-        <li className="menu__item">
-          <a href="index.html" className="menu__link">
+    <div className={style.nav__menu}>
+      <ul className={style.menu__list}>
+        <li className={style.menu__item}>
+          <a href="index.html" className={style.menu__link}>
             Главное
           </a>
         </li>
-        <li className="menu__item">
-          <a href="index.html" className="menu__link">
+        <li className={style.menu__item}>
+          <a href="index.html" className={style.menu__link}>
             Мой плейлист
           </a>
         </li>
-        <li className="menu__item">
-          <a href="index.html" className="menu__link">
+        <li className={style.menu__item}>
+          <a href="index.html" className={style.menu__link}>
             Войти
           </a>
         </li>

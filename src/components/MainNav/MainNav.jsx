@@ -1,5 +1,5 @@
-import "../../css/style.css";
 import { useState } from "react";
+import style from "./MainNav.module.css";
 import NavLogo from "./navLogo/navLogo";
 import NavMenu from "./navMenu/navMenu";
 import NavBurger from "./navBurger/navBurger";
@@ -16,9 +16,12 @@ function MainNav() {
   };
 
   return (
-    <nav className="main__nav nav">
+    <nav className={style.main__nav}>
       <NavLogo />
-      <NavBurger toggleVisibility={toggleVisibility} handleKeyDown={handleKeyDown} />
+      <NavBurger
+        toggleVisibility={toggleVisibility}
+        handleKeyDown={handleKeyDown}
+      />
       {visible && <NavMenu />}
     </nav>
   );
