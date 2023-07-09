@@ -244,6 +244,11 @@ body {
 }
 
 .filter {
+  &__box {
+    display: flex;
+    gap: 18px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
@@ -253,6 +258,7 @@ body {
   }
 
   &__button {
+    position: relative;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -260,10 +266,6 @@ body {
     border: 1px solid #ffffff;
     border-radius: 60px;
     padding: 6px 20px;
-
-    &:not(:last-child) {
-      margin-right: 10px;
-    }
   }
 }
 
@@ -725,7 +727,6 @@ body {
   background-color: #313131;
   overflow: hidden;
   border-radius: 12px;
-  margin-left: 90px;
 
   &__ul {
     display: flex;
