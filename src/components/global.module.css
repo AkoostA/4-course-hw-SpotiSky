@@ -1,0 +1,81 @@
+@font-face {
+  font-family: "StratosSkyeng";
+  src: url("../fonts/Stratos-Regular.woff2") format("woff2"),
+    url("../fonts/Stratos-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:global(._btn-icon:active .trackPlay__likeSvg,
+  ._btn-icon:active .trackPlay__dislikeSvg) {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+:global(._btn-icon:active svg; ) {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+:global(._btn-text:active) {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
+:global(._btn-icon:hover svg) {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+
+:global(._btn-text:hover) {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+
+:global(#root) {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #383838;
+}
+
+:global(html, body) {
+  width: 100%;
+  height: 100%;
+  font-family: 'StratosSkyeng', sans-serif;
+  color: #ffffff;
+}
+
+:global(ul li) {
+  list-style: none;
+}
+
+:global(button, ._btn) {
+  cursor: pointer;
+}
+
+:global(a, a:visited) {
+  text-decoration: none;
+  font-family: 'StratosSkyeng', sans-serif;
+  cursor: pointer;
+}
+
+:global(a) {
+  text-decoration: none;
+}
+
+:global(*:before, *:after) {
+  box-sizing: border-box;
+}
+
+:global(*) {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

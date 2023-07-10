@@ -1,5 +1,3 @@
-import "../css/style.css";
-
 function Skeleton({ w, h }) {
   const style = {
     width: w,
