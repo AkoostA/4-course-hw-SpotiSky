@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "StratosSkyeng";
+  src: url("../fonts/Stratos-Regular.woff2") format("woff2"),
+    url("../fonts/Stratos-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :global(._btn-icon:active .trackPlay__likeSvg,
   ._btn-icon:active .trackPlay__dislikeSvg) {
   fill: #696969;
@@ -5,11 +14,7 @@
   cursor: pointer;
 }
 
-:global {
-  ._btn-icon: active svg;
-}
-
-  {
+:global(._btn-icon:active svg; ) {
   fill: transparent;
   stroke: #ffffff;
   cursor: pointer;
