@@ -16,9 +16,9 @@ function SidebarBlock({ loading }) {
         </div>
       ) : (
         <div className={style.sidebar__list}>
-          <SidebarItem playList={playListOne} />
-          <SidebarItem playList={playListTwo} />
-          <SidebarItem playList={playListThree} />
+          <SidebarItem select="playListDay" playList={playListOne} />
+          <SidebarItem select="100DanceHit" playList={playListTwo} />
+          <SidebarItem select="indieCharges" playList={playListThree} />
         </div>
       )}
     </div>
