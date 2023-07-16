@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import style from "./Registration.module.css";
+import style from "./Register.module.css";
 
-function Registration() {
+function Register() {
   const navigate = useNavigate();
 
   const loginButton = () => {
@@ -9,7 +9,7 @@ function Registration() {
   };
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>Registration PAGE</h1>
+      <h1 className={style.login__header}>Register PAGE</h1>
       <button
         onClick={loginButton}
         className={style.login__button}
@@ -21,4 +21,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default Register;

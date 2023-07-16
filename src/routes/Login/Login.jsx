@@ -5,11 +5,11 @@ function Login() {
   const navigate = useNavigate();
 
   const enterButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/Main", { replace: true });
   };
 
-  const registrationButton = () => {
-    navigate("/registration", { replace: true });
+  const registerButton = () => {
+    navigate("/Register", { replace: true });
   };
 
   return (
@@ -23,7 +23,7 @@ function Login() {
         ВХОД
       </button>
       <button
-        onClick={registrationButton}
+        onClick={registerButton}
         className={style.login__button}
         type="button"
       >

@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import style from "./MyPlayList.module.css";
+import style from "./Favorites.module.css";
 
-function MyPlayList() {
+function Favorites() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/Main", { replace: true });
   };
 
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>MyPlayList PAGE</h1>
+      <h1 className={style.login__header}>Favorites PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}
@@ -22,4 +22,4 @@ function MyPlayList() {
   );
 }
 
-export default MyPlayList;
+export default Favorites;

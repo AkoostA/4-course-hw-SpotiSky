@@ -5,11 +5,11 @@ function NotFound() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/Main", { replace: true });
   };
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>404 PAGE</h1>
+      <h1 className={style.login__header}>NotFound 404 PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}

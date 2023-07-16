@@ -1,15 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
-import style from "./Selection.module.css";
+import style from "./Сategory.module.css";
 
-function Selection() {
+function Сategory() {
   const params = useParams();
   const navigate = useNavigate();
+
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/Main", { replace: true });
   };
+
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>{params.id} PAGE</h1>
+      <h1 className={style.login__header}>Category {params.id} PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}
@@ -21,4 +23,4 @@ function Selection() {
   );
 }
 
-export default Selection;
+export default Сategory;
