@@ -1,17 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
-import style from "./Сategory.module.css";
+import { useNavigate } from "react-router-dom";
+import style from "./NotFound.module.css";
 
-function Сategory() {
-  const params = useParams();
+function NotFound() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/Main", { replace: true });
+    navigate("/main", { replace: true });
   };
-
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>Category {params.id} PAGE</h1>
+      <h1 className={style.login__header}>NotFound 404 PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}
@@ -23,4 +21,4 @@ function Сategory() {
   );
 }
 
-export default Сategory;
+export default NotFound;

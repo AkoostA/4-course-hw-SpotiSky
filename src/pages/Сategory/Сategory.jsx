@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import style from "./Favorites.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import style from "./Сategory.module.css";
 
-function Favorites() {
+function Сategory() {
+  const params = useParams();
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/Main", { replace: true });
+    navigate("/main", { replace: true });
   };
 
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>Favorites PAGE</h1>
+      <h1 className={style.login__header}>Category {params.id} PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}
@@ -22,4 +23,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default Сategory;

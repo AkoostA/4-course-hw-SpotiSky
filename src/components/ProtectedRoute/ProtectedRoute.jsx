@@ -1,11 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet  } from "react-router-dom";
 
-function ProtectedRoute({ children, redirectPath = "/", isAllowed }) {
-  if (!isAllowed) {
+function ProtectedRoute({ redirectPath = "/", isAllowed }) {
+  if (isAllowed.token !== "token") {
     return <Navigate to={redirectPath} replace />;
   }
 
-  return children;
+  return <Outlet />;
 }
 
 export default ProtectedRoute;

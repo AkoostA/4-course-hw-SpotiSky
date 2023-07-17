@@ -1,34 +1,23 @@
 import { Route, Routes } from "react-router-dom";
-import Main from "../../routes/Main/Main";
-import Login from "../../routes/Login/Login";
-import Register from "../../routes/Register/Register";
-import Favorites from "../../routes/Favorites/Favorites";
-import NotFound from "../../routes/NotFound/NotFound";
-import Сategory from "../../routes/Сategory/Сategory";
+import Main from "../../pages/Main/Main";
+import Login from "../../pages/Login/Login";
+import Register from "../../pages/Register/Register";
+import Favorites from "../../pages/Favorites/Favorites";
+import NotFound from "../../pages/NotFound/NotFound";
+import Сategory from "../../pages/Сategory/Сategory";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import TOKEN from "../../token";
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/Register" element={<Register />} />
-      <Route
-        path="/Main"
-        element={
-          <ProtectedRoute isAllowed>
-            <Main />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/Favorites"
-        element={
-          <ProtectedRoute isAllowed>
-            <Favorites />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/Category/:id" element={<Сategory />} />
+      <Route path="/register" element={<Register />} />
+      <Route element={<ProtectedRoute isAllowed={TOKEN} />}>
+        <Route path="/main" element={<Main />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/category/:id" element={<Сategory />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

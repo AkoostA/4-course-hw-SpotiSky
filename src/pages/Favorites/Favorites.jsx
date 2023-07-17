@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import style from "./NotFound.module.css";
+import style from "./Favorites.module.css";
 
-function NotFound() {
+function Favorites() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/Main", { replace: true });
+    navigate("/main", { replace: true });
   };
+
   return (
     <div className={style.login}>
-      <h1 className={style.login__header}>NotFound 404 PAGE</h1>
+      <h1 className={style.login__header}>Favorites PAGE</h1>
       <button
         onClick={mainButton}
         className={style.login__button}
@@ -21,4 +22,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default Favorites;
