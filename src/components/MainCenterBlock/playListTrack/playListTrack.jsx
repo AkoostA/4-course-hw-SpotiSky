@@ -2,7 +2,19 @@ import style from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../Skeleton";
 
-function PlayListTrack({ loading, allTrack}) {
+function PlayListTrack({ loading, allTrack, getError, setOpenBar }) {
+  if (getError) {
+    return (
+      <div className={style.content__playlist}>
+        <div className={style.playlist__item}>
+          <div className={style.playlist__track}>
+            <h1>{getError}</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={style.content__playlist}>
       <div className={style.playlist__item}>
@@ -28,7 +40,7 @@ function PlayListTrack({ loading, allTrack}) {
           </div>
         ) : (
           allTrack.map((track) => (
-            <div className={style.playlist__track}>
+            <div key={track.id} className={style.playlist__track}>
               <div className={style.track__title}>
                 <div className={style.track__titleImage}>
                   <svg className={style.track__titleSvg} alt="music">
@@ -36,9 +48,13 @@ function PlayListTrack({ loading, allTrack}) {
                   </svg>
                 </div>
                 <div className={style.titleText}>
-                  <a className={style.track__titleLink} href="index.html">
+                  <button
+                    type="button"
+                    onClick={() => setOpenBar(true)}
+                    className={style.track__titleLink}
+                  >
                     {track.name} <span className={style.track__titleSpan} />
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className={style.track__author}>

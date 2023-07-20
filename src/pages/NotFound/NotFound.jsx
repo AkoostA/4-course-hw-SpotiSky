@@ -5,7 +5,7 @@ function NotFound() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/", { replace: true });
   };
   return (
     <div className={style.login}>
@@ -15,7 +15,7 @@ function NotFound() {
         className={style.login__button}
         type="button"
       >
-        На Main страницу
+        На Login страницу
       </button>
     </div>
   );
