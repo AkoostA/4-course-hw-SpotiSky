@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import style from "./navMenu.module.css";
 
 function NavMenu() {
@@ -5,19 +6,19 @@ function NavMenu() {
     <div className={style.nav__menu}>
       <ul className={style.menu__list}>
         <li className={style.menu__item}>
-          <a href="index.html" className={style.menu__link}>
+          <Link to="/main" className={style.menu__link}>
             Главное
-          </a>
+          </Link>
         </li>
         <li className={style.menu__item}>
-          <a href="index.html" className={style.menu__link}>
+          <Link to="/favorites" className={style.menu__link}>
             Мой плейлист
-          </a>
+          </Link>
         </li>
         <li className={style.menu__item}>
-          <a href="index.html" className={style.menu__link}>
-            Войти
-          </a>
+          <Link to="/" className={style.menu__link}>
+            Выйти
+          </Link>
         </li>
       </ul>
     </div>
