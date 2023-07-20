@@ -8,13 +8,13 @@ import Сategory from "../../pages/Сategory/Сategory";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import TOKEN from "../../token";
 
-function AppRoutes() {
+function AppRoutes({ allTrack, loading }) {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoute isAllowed={TOKEN} />}>
-        <Route path="/main" element={<Main />} />
+        <Route path="/main" element={<Main allTrack={allTrack} loading={loading}/>} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Сategory />} />
       </Route>
