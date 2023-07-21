@@ -4,11 +4,11 @@ import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
 import MainSidebar from "../../components/MainSidebar/MainSidebar";
 import MainBar from "../../components/MainBar/MainBar";
 
-function Main({ loading, allTrack, getError, openBar, setOpenBar }) {
+function Main({ setToken, loading, allTrack, getError, openBar, setOpenBar }) {
   return (
     <div className={style.container}>
       <main className={style.main}>
-        <MainNav />
+        <MainNav setToken={setToken} />
         <MainCenterBlock
           loading={loading}
           allTrack={allTrack}

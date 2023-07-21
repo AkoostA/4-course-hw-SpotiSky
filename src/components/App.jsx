@@ -3,7 +3,8 @@ import AppRoutes from "./AppRoutes/AppRoutes";
 import getTrackAll from "../api/Api";
 
 function App() {
-  const [allTrack, setAllTrack] = useState();
+  const [token, setToken] = useState(false);
+  const [allTrack, setAllTrack] = useState(null);
   const [loading, setLoading] = useState(true);
   const [getError, setGetError] = useState(null);
   const [openBar, setOpenBar] = useState(false);
@@ -25,6 +26,8 @@ function App() {
 
   return (
     <AppRoutes
+      token={token}
+      setToken={setToken}
       allTrack={allTrack}
       loading={loading}
       getError={getError}

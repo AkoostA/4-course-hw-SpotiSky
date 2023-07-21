@@ -10,11 +10,11 @@ function Сategory() {
   };
 
   return (
-    <div className={style.login}>
-      <h1 className={style.login__header}>Category {params.id} PAGE</h1>
+    <div className={style.сategory}>
+      <h1 className={style.сategory__header}>Category {params.id} PAGE</h1>
       <button
         onClick={mainButton}
-        className={style.login__button}
+        className={style.сategory__button}
         type="button"
       >
         На Main страницу
