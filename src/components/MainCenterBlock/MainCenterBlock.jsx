@@ -3,7 +3,7 @@ import CenterBlockSearch from "./centerBlockSearch/centerBlockSearch";
 import FilterButton from "./filterButton/filterButton";
 import CenterBlockContent from "./centerBlockContent/centerBlockContent";
 
-function MainCenterBlock({ loading, allTrack, getError, setOpenBar }) {
+function MainCenterBlock({ loading, allTrack, getError, setOpenBar, setNameTrack, setAuthorTrack }) {
   return (
     <div className={style.main__centerBlock}>
       <CenterBlockSearch />
@@ -14,6 +14,8 @@ function MainCenterBlock({ loading, allTrack, getError, setOpenBar }) {
         allTrack={allTrack}
         getError={getError}
         setOpenBar={setOpenBar}
+        setNameTrack={setNameTrack}
+        setAuthorTrack={setAuthorTrack}
       />
     </div>
   );

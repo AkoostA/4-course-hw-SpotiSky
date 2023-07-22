@@ -7,15 +7,7 @@ import NotFound from "../../pages/NotFound/NotFound";
 import Сategory from "../../pages/Сategory/Сategory";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-function AppRoutes({
-  token,
-  setToken,
-  allTrack,
-  loading,
-  getError,
-  setOpenBar,
-  openBar,
-}) {
+function AppRoutes({ token, setToken, allTrack, loading, getError }) {
   return (
     <Routes>
       <Route path="/" element={<Login setToken={setToken} />} />
@@ -29,8 +21,6 @@ function AppRoutes({
               allTrack={allTrack}
               loading={loading}
               getError={getError}
-              setOpenBar={setOpenBar}
-              openBar={openBar}
             />
           }
         />

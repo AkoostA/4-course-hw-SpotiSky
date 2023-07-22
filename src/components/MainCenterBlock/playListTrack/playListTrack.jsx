@@ -2,7 +2,20 @@ import style from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../Skeleton";
 
-function PlayListTrack({ loading, allTrack, getError, setOpenBar }) {
+function PlayListTrack({
+  loading,
+  allTrack,
+  getError,
+  setOpenBar,
+  setNameTrack,
+  setAuthorTrack,
+}) {
+  const toggleNameAndAuthor = ({ name, author }) => {
+    setOpenBar(true);
+    setNameTrack(name);
+    setAuthorTrack(author);
+  };
+
   if (getError) {
     return (
       <div className={style.content__playlist}>
@@ -50,7 +63,12 @@ function PlayListTrack({ loading, allTrack, getError, setOpenBar }) {
                 <div className={style.titleText}>
                   <button
                     type="button"
-                    onClick={() => setOpenBar(true)}
+                    onClick={() =>
+                      toggleNameAndAuthor({
+                        name: track.name,
+                        author: track.author,
+                      })
+                    }
                     className={style.track__titleLink}
                   >
                     {track.name} <span className={style.track__titleSpan} />
@@ -58,14 +76,34 @@ function PlayListTrack({ loading, allTrack, getError, setOpenBar }) {
                 </div>
               </div>
               <div className={style.track__author}>
-                <a className={style.track__authorLink} href="index.html">
+                <button
+                  type="button"
+                  onClick={() =>
+                    toggleNameAndAuthor({
+                      name: track.name,
+                      author: track.author,
+                    })
+                  }
+                  className={style.track__authorLink}
+                  href="index.html"
+                >
                   {track.author}
-                </a>
+                </button>
               </div>
               <div className={style.track__album}>
-                <a className={style.track__albumLink} href="index.html">
+                <button
+                  type="button"
+                  onClick={() =>
+                    toggleNameAndAuthor({
+                      name: track.name,
+                      author: track.author,
+                    })
+                  }
+                  className={style.track__albumLink}
+                  href="index.html"
+                >
                   {track.album}
-                </a>
+                </button>
               </div>
               <div className={style.time}>
                 <svg className={style.track__timeSvg} alt="time">

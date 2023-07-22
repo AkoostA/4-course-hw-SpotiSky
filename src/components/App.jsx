@@ -7,7 +7,6 @@ function App() {
   const [allTrack, setAllTrack] = useState(null);
   const [loading, setLoading] = useState(true);
   const [getError, setGetError] = useState(null);
-  const [openBar, setOpenBar] = useState(false);
 
   const asyncGetTrackAll = async () => {
     try {
@@ -31,8 +30,6 @@ function App() {
       allTrack={allTrack}
       loading={loading}
       getError={getError}
-      openBar={openBar}
-      setOpenBar={setOpenBar}
     />
   );
 }
