@@ -2,7 +2,7 @@ import style from "./centerBlockContent.module.css";
 import ContentTitle from "../contentTitle/contentTitle";
 import PlayListTrack from "../playListTrack/playListTrack";
 
-function CenterBlockContent({ loading, allTrack, getError, setOpenBar, setNameTrack, setAuthorTrack }) {
+function CenterBlockContent({ loading, allTrack, getError, setOpenBar, setNameTrack, setAuthorTrack, setAudio }) {
   return (
     <div className={style.centerBlock__content}>
       <ContentTitle />
@@ -13,6 +13,7 @@ function CenterBlockContent({ loading, allTrack, getError, setOpenBar, setNameTr
         setOpenBar={setOpenBar}
         setNameTrack={setNameTrack}
         setAuthorTrack={setAuthorTrack}
+        setAudio={setAudio}
       />
     </div>
   );

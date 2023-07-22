@@ -9,11 +9,13 @@ function PlayListTrack({
   setOpenBar,
   setNameTrack,
   setAuthorTrack,
+  setAudio,
 }) {
-  const toggleNameAndAuthor = ({ name, author }) => {
+  const toggleNameAndAuthor = ({ name, author, audio }) => {
     setOpenBar(true);
     setNameTrack(name);
     setAuthorTrack(author);
+    setAudio(audio);
   };
 
   if (getError) {
@@ -67,6 +69,7 @@ function PlayListTrack({
                       toggleNameAndAuthor({
                         name: track.name,
                         author: track.author,
+                        audio: track.track_file,
                       })
                     }
                     className={style.track__titleLink}
@@ -82,6 +85,7 @@ function PlayListTrack({
                     toggleNameAndAuthor({
                       name: track.name,
                       author: track.author,
+                      audio: track.track_file,
                     })
                   }
                   className={style.track__authorLink}
@@ -97,6 +101,7 @@ function PlayListTrack({
                     toggleNameAndAuthor({
                       name: track.name,
                       author: track.author,
+                      audio: track.track_file,
                     })
                   }
                   className={style.track__albumLink}

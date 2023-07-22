@@ -9,6 +9,7 @@ function Main({ setToken, loading, allTrack, getError }) {
   const [openBar, setOpenBar] = useState(false);
   const [nameTrack, setNameTrack] = useState(null);
   const [authorTrack, setAuthorTrack] = useState(null);
+  const [audio, setAudio] = useState(null);
 
   return (
     <div className={style.container}>
@@ -21,6 +22,7 @@ function Main({ setToken, loading, allTrack, getError }) {
           setOpenBar={setOpenBar}
           setNameTrack={setNameTrack}
           setAuthorTrack={setAuthorTrack}
+          setAudio={setAudio}
         />
         <MainSidebar loading={loading} />
       </main>
@@ -30,6 +32,7 @@ function Main({ setToken, loading, allTrack, getError }) {
           openBar={openBar}
           nameTrack={nameTrack}
           authorTrack={authorTrack}
+          audio={audio}
         />
       </div>
     </div>
