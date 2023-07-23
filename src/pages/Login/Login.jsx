@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
-import TOKEN from "../../token";
 
-function Login() {
+function Login({ setToken }) {
   const navigate = useNavigate();
-  TOKEN.token = "noToken";
 
   const enterButton = () => {
-    TOKEN.token = "token";
+    setToken(true);
     navigate("/main", { replace: true });
   };
 

@@ -1,26 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import style from "./Main.module.css";
 import MainNav from "../../components/MainNav/MainNav";
 import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
 import MainSidebar from "../../components/MainSidebar/MainSidebar";
 import MainBar from "../../components/MainBar/MainBar";
 
-function Main() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 3000);
-  }, [loading]);
+function Main({ setToken, loading, allTrack, getError }) {
+  const [openBar, setOpenBar] = useState(false);
+  const [nameTrack, setNameTrack] = useState(null);
+  const [authorTrack, setAuthorTrack] = useState(null);
+  const [audio, setAudio] = useState(null);
 
   return (
     <div className={style.container}>
       <main className={style.main}>
-        <MainNav />
-        <MainCenterBlock loading={loading} />
+        <MainNav setToken={setToken} />
+        <MainCenterBlock
+          loading={loading}
+          allTrack={allTrack}
+          getError={getError}
+          setOpenBar={setOpenBar}
+          setNameTrack={setNameTrack}
+          setAuthorTrack={setAuthorTrack}
+          setAudio={setAudio}
+        />
         <MainSidebar loading={loading} />
       </main>
       <div className={style.bar}>
-        <MainBar loading={loading} />
+        <MainBar
+          loading={loading}
+          openBar={openBar}
+          nameTrack={nameTrack}
+          authorTrack={authorTrack}
+          audio={audio}
+        />
       </div>
     </div>
   );

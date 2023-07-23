@@ -5,9 +5,11 @@
 }
 
 .playlist__item {
+    gap: 12px;
     width: 100%;
-    display: block;
     margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .playlist__track {
@@ -48,6 +50,8 @@
     font-size: 16px;
     line-height: 24px;
     color: #ffffff;
+    background: transparent;
+    border: medium none;
 }
 
 .track__titleSpan {
@@ -71,6 +75,8 @@
     line-height: 24px;
     color: #ffffff;
     text-align: left;
+    background: transparent;
+    border: medium none;
 }
 
 .track__album {
@@ -83,6 +89,8 @@
     font-size: 16px;
     line-height: 24px;
     color: #696969;
+    background: transparent;
+    border: medium none;
 }
 
 .track__timeSvg {

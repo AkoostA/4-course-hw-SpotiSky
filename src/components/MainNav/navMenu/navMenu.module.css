@@ -10,6 +10,8 @@
 .menu__item {
     padding: 5px 0;
     margin-bottom: 16px;
+    background: transparent;
+    border: medium none;
 }
 
 .menu__link {
@@ -17,6 +19,6 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    background-color: rgba(28,28,28,0);
+    background-color: rgba(28, 28, 28, 0);
     border: medium none;
 }
