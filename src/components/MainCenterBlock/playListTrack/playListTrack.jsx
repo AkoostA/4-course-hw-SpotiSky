@@ -89,7 +89,6 @@ function PlayListTrack({
                     })
                   }
                   className={style.track__authorLink}
-                  href="index.html"
                 >
                   {track.author}
                 </button>
@@ -105,7 +104,6 @@ function PlayListTrack({
                     })
                   }
                   className={style.track__albumLink}
-                  href="index.html"
                 >
                   {track.album}
                 </button>
