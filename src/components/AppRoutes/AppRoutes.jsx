@@ -7,23 +7,13 @@ import NotFound from "../../pages/NotFound/NotFound";
 import Сategory from "../../pages/Сategory/Сategory";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-function AppRoutes({ token, setToken, allTrack, loading, getError }) {
+function AppRoutes({ token, setToken }) {
   return (
     <Routes>
       <Route path="/" element={<Login setToken={setToken} />} />
       <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoute token={token} />}>
-        <Route
-          path="/main"
-          element={
-            <Main
-              setToken={setToken}
-              allTrack={allTrack}
-              loading={loading}
-              getError={getError}
-            />
-          }
-        />
+        <Route path="/main" element={<Main setToken={setToken} />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Сategory />} />
       </Route>

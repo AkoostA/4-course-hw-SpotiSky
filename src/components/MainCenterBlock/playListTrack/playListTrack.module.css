@@ -54,6 +54,11 @@
     border: medium none;
 }
 
+.track__titleLink:hover {
+    text-decoration: underline;
+    color: #b672ff;
+}
+
 .track__titleSpan {
     font-style: normal;
     font-weight: 400;
@@ -79,6 +84,11 @@
     border: medium none;
 }
 
+.track__authorLink:hover {
+    text-decoration: underline;
+    color: #b672ff;
+}
+
 .track__album {
     width: 245px;
 }
@@ -91,6 +101,11 @@
     color: #696969;
     background: transparent;
     border: medium none;
+}
+
+.track__albumLink:hover {
+    text-decoration: underline;
+    color: #b672ff;
 }
 
 .track__timeSvg {
