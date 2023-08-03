@@ -29,6 +29,7 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
         break;
     }
   };
+
   return (
     <div className={style.player__controls}>
       <button

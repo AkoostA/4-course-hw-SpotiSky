@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/media-has-caption */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./Main.module.css";
 import MainNav from "../../components/MainNav/MainNav";
 import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
@@ -11,10 +10,8 @@ function Main({ setToken }) {
   const [getError, setGetError] = useState(null);
   const [allTrack, setAllTrack] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [repeat, setRepeat] = useState(false);
   const [track, setTrack] = useState(null);
   const [play, setPlay] = useState(false);
-  const audioRef = useRef(null);
 
   const asyncGetTrackAll = async () => {
     try {
@@ -33,12 +30,6 @@ function Main({ setToken }) {
 
   return (
     <div className={style.container}>
-      <audio
-        ref={audioRef}
-        src={track ? track.track_file : null}
-        autoPlay
-        loop={repeat}
-      />
       <main className={style.main}>
         <MainNav setToken={setToken} />
         <MainCenterBlock
@@ -53,9 +44,6 @@ function Main({ setToken }) {
       <div className={style.bar}>
         {track ? (
           <MainBar
-            setRepeat={setRepeat}
-            repeat={repeat}
-            audioRef={audioRef}
             play={play}
             setPlay={setPlay}
             loading={loading}
