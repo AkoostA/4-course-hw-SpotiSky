@@ -1,18 +1,31 @@
+/* eslint-disable jsx-a11y/media-has-caption */
+import { useRef, useState } from "react";
 import style from "./MainBar.module.css";
 import PlayerProgress from "./playerProgress/playerProgress";
 import PlayerBlock from "./playerBlock/playerBlock";
 
-function MainBar({ loading, openBar, nameTrack, authorTrack, audio }) {
+function MainBar({ loading, play, setPlay, track }) {
+  const audioRef = useRef(null);
+  const [repeat, setRepeat] = useState(false);
+
   return (
     <div className={style.bar__content}>
-      <PlayerProgress audio={audio} />
-      {openBar ? (
-        <PlayerBlock
-          loading={loading}
-          nameTrack={nameTrack}
-          authorTrack={authorTrack}
-        />
-      ) : null}
+      <audio
+        ref={audioRef}
+        src={track ? track.track_file : null}
+        autoPlay
+        loop={repeat}
+      />
+      <PlayerProgress audioRef={audioRef} play={play} />
+      <PlayerBlock
+        repeat={repeat}
+        setRepeat={setRepeat}
+        audioRef={audioRef}
+        play={play}
+        setPlay={setPlay}
+        loading={loading}
+        track={track}
+      />
     </div>
   );
 }

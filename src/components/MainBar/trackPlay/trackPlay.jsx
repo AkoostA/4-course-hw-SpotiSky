@@ -3,7 +3,7 @@ import Skeleton from "../../Skeleton";
 import sprite from "../../../img/icon/sprite.svg";
 import TrackLikeDis from "../trackLikeDis/trackLikeDis";
 
-function TrackPlay({ loading, nameTrack, authorTrack }) {
+function TrackPlay({ loading, track }) {
   return (
     <div className={style.player__trackPlay}>
       {loading ? (
@@ -27,12 +27,12 @@ function TrackPlay({ loading, nameTrack, authorTrack }) {
           </div>
           <div className={style.trackPlay__author}>
             <button type="button" className={style.trackPlay__authorLink}>
-              {nameTrack}
+              {track.name}
             </button>
           </div>
           <div className={style.trackPlay__album}>
             <button type="button" className={style.trackPlay__albumLink}>
-              {authorTrack}
+              {track.author}
             </button>
           </div>
         </div>

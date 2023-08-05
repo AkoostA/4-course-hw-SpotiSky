@@ -2,20 +2,10 @@ import style from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../Skeleton";
 
-function PlayListTrack({
-  loading,
-  allTrack,
-  getError,
-  setOpenBar,
-  setNameTrack,
-  setAuthorTrack,
-  setAudio,
-}) {
-  const toggleNameAndAuthor = ({ name, author, audio }) => {
-    setOpenBar(true);
-    setNameTrack(name);
-    setAuthorTrack(author);
-    setAudio(audio);
+function PlayListTrack({ loading, allTrack, getError, setTrack, setPlay }) {
+  const toggleTrack = (track) => {
+    setTrack(track);
+    setPlay(true);
   };
 
   if (getError) {
@@ -65,13 +55,7 @@ function PlayListTrack({
                 <div className={style.titleText}>
                   <button
                     type="button"
-                    onClick={() =>
-                      toggleNameAndAuthor({
-                        name: track.name,
-                        author: track.author,
-                        audio: track.track_file,
-                      })
-                    }
+                    onClick={() => toggleTrack(track)}
                     className={style.track__titleLink}
                   >
                     {track.name} <span className={style.track__titleSpan} />
@@ -81,15 +65,8 @@ function PlayListTrack({
               <div className={style.track__author}>
                 <button
                   type="button"
-                  onClick={() =>
-                    toggleNameAndAuthor({
-                      name: track.name,
-                      author: track.author,
-                      audio: track.track_file,
-                    })
-                  }
+                  onClick={() => toggleTrack(track)}
                   className={style.track__authorLink}
-                  href="index.html"
                 >
                   {track.author}
                 </button>
@@ -97,15 +74,8 @@ function PlayListTrack({
               <div className={style.track__album}>
                 <button
                   type="button"
-                  onClick={() =>
-                    toggleNameAndAuthor({
-                      name: track.name,
-                      author: track.author,
-                      audio: track.track_file,
-                    })
-                  }
+                  onClick={() => toggleTrack(track)}
                   className={style.track__albumLink}
-                  href="index.html"
                 >
                   {track.album}
                 </button>
