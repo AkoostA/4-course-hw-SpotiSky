@@ -1,22 +1,53 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "../../img/logo-black.png";
 import S from "./Login.module.css";
+import { getLogin } from "../../api/Api";
 
-function Login({ isLoginMode = false }) {
-  const [error, setError] = useState(null);
+function Login({ setToken }) {
+  const [disabled, setDisabled] = useState(false);
+  const [errorLog, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
+  const getLoginCheck = (response) => {
+    if (response.detail) {
+      setError(response.detail);
+      return;
+    }
+
+    setToken(true);
+    navigate("/");
   };
 
-  // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
+  const handleLogin = async () => {
+    try {
+      setDisabled(true);
+      const response = await getLogin({ email, password });
+      getLoginCheck(response);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  const loginCheck = () => {
+    try {
+      if (!email || !password) {
+        if (!email) throw new Error("Не введена почта");
+        if (!password) throw new Error("Не введен пароль");
+      }
+      handleLogin();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     setError(null);
-  }, [isLoginMode, email, password]);
+  }, [email, password]);
 
   return (
     <div className={S.pageContainer}>
@@ -48,17 +79,22 @@ function Login({ isLoginMode = false }) {
             }}
           />
         </div>
-        {error && <div className={S.error}>{error}</div>}
+        {errorLog && <div className={S.error}>{errorLog}</div>}
         <div className={S.buttons}>
           <button
             className={S.primaryButton}
             type="button"
-            onClick={handleLogin}
+            onClick={loginCheck}
+            disabled={disabled}
           >
             Войти
           </button>
           <Link to="/register">
-            <button className={S.secondaryButton} type="button">
+            <button
+              className={S.secondaryButton}
+              type="button"
+              disabled={disabled}
+            >
               Зарегистрироваться
             </button>
           </Link>
