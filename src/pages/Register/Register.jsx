@@ -1,23 +1,75 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "../../img/logo-black.png";
 import S from "./Register.module.css";
+import { getRegister } from "../../api/Api";
 
-function Register({ isLoginMode }) {
-  const [error, setError] = useState(null);
+function Register({ setToken }) {
+  const [errorLog, setError] = useState(null);
   const [email, setEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    alert(`Выполняется регистрация: ${email} ${password}`);
-    setError("Неизвестная ошибка регистрации");
+  const getRegisterCheck = (response) => {
+    if (response.email) {
+      if (response.email !== email) {
+        setError(response.email[0]);
+        return;
+      }
+    }
+
+    if (response.username) {
+      if (response.username !== username) {
+        setError(response.username[0]);
+        return;
+      }
+    }
+
+    if (response.password) {
+      if (response.password !== password) {
+        setError(response.password[0]);
+        return;
+      }
+    }
+
+    setToken(true);
+    navigate("/");
   };
 
-  // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
+  const handleRegister = async () => {
+    try {
+      setDisabled(true);
+      const response = await getRegister({ email, username, password });
+      getRegisterCheck(response);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setDisabled(false);
+    }
+  };
+
+  const registerCheck = () => {
+    try {
+      if (!email || !username || !password || !repeatPassword) {
+        if (!email) throw new Error("Не введена почта");
+        if (!username) throw new Error("Не введен логин");
+        if (!password) throw new Error("Не введен пароль");
+        if (!repeatPassword) throw new Error("Не введен повторный пароль");
+      }
+      if (password !== repeatPassword) throw new Error("Пароль не совпадает");
+      handleRegister();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     setError(null);
-  }, [isLoginMode, email, password, repeatPassword]);
+  }, [email, password, repeatPassword]);
+
   return (
     <div className={S.pageContainer}>
       <div className={S.modalForm}>
@@ -35,6 +87,16 @@ function Register({ isLoginMode }) {
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
+            }}
+          />
+          <input
+            className={S.modalInput}
+            type="text"
+            name="login"
+            placeholder="Логин"
+            value={username}
+            onChange={(event) => {
+              setUserName(event.target.value);
             }}
           />
           <input
@@ -58,17 +120,22 @@ function Register({ isLoginMode }) {
             }}
           />
         </div>
-        {error && <div className={S.error}>{error}</div>}
+        {errorLog && <div className={S.error}>{errorLog}</div>}
         <div className={S.buttons}>
           <button
             className={S.primaryButton}
             type="button"
-            onClick={handleRegister}
+            onClick={registerCheck}
+            disabled={disabled}
           >
             Зарегистрироваться
           </button>
           <Link to="/login">
-            <button className={S.secondaryButton} type="button">
+            <button
+              className={S.secondaryButton}
+              type="button"
+              disabled={disabled}
+            >
               Вход
             </button>
           </Link>
