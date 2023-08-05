@@ -3,21 +3,23 @@ import { useEffect, useState } from "react";
 import logo from "../../img/logo-black.png";
 import S from "./Login.module.css";
 import { getLogin } from "../../api/Api";
+import { useUserContext } from "../../components/Contexts/Contexts";
 
-function Login({ setToken }) {
+function Login() {
   const [disabled, setDisabled] = useState(false);
   const [errorLog, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { toggleUser } = useUserContext();
 
-  const getLoginCheck = (response) => {
-    if (response.detail) {
-      setError(response.detail);
+  const getLoginCheck = (newUser) => {
+    if (newUser.detail) {
+      setError(newUser.detail);
       return;
     }
 
-    setToken(true);
+    toggleUser(newUser);
     navigate("/");
   };
 

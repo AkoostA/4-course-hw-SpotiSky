@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import logo from "../../img/logo-black.png";
 import S from "./Register.module.css";
 import { getRegister } from "../../api/Api";
+import { useUserContext } from "../../components/Contexts/Contexts";
 
-function Register({ setToken }) {
+function Register() {
   const [errorLog, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
@@ -12,30 +13,31 @@ function Register({ setToken }) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
+  const { toggleUser } = useUserContext();
 
-  const getRegisterCheck = (response) => {
-    if (response.email) {
-      if (response.email !== email) {
-        setError(response.email[0]);
+  const getRegisterCheck = (newUser) => {
+    if (newUser.email) {
+      if (newUser.email !== email) {
+        setError(newUser.email[0]);
         return;
       }
     }
 
-    if (response.username) {
-      if (response.username !== username) {
-        setError(response.username[0]);
+    if (newUser.username) {
+      if (newUser.username !== username) {
+        setError(newUser.username[0]);
         return;
       }
     }
 
-    if (response.password) {
-      if (response.password !== password) {
-        setError(response.password[0]);
+    if (newUser.password) {
+      if (newUser.password !== password) {
+        setError(newUser.password[0]);
         return;
       }
     }
 
-    setToken(true);
+    toggleUser(newUser);
     navigate("/");
   };
 

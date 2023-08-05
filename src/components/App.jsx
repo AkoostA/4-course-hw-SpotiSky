@@ -1,10 +1,21 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { useState } from "react";
+import { UserContext } from "./Contexts/Contexts";
 import AppRoutes from "./AppRoutes/AppRoutes";
 
 function App() {
-  const [token, setToken] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-  return <AppRoutes token={token} setToken={setToken} />;
+  const toggleUser = (newUser) => {
+    setUser(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
+  };
+
+  return (
+    <UserContext.Provider value={{ user, toggleUser }}>
+      <AppRoutes />;
+    </UserContext.Provider>
+  );
 }
 
 export default App;

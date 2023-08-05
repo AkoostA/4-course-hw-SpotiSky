@@ -18,6 +18,10 @@
 .sidebar__avatar {
     width: 43px;
     height: 43px;
-    background-color: #313131;
     border-radius: 50%;
+}
+
+.sidebar__button {
+    background-color: rgba(28, 28, 28, 0);
+    border: none;
 }
