@@ -5,7 +5,7 @@ function Favorites() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (

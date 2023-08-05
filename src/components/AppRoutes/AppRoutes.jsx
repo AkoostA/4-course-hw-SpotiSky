@@ -10,10 +10,10 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function AppRoutes({ token, setToken }) {
   return (
     <Routes>
-      <Route path="/" element={<Login setToken={setToken} />} />
+      <Route path="/login" element={<Login setToken={setToken} />} />
       <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoute token={token} />}>
-        <Route path="/main" element={<Main setToken={setToken} />} />
+        <Route path="/" element={<Main setToken={setToken} />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Сategory />} />
       </Route>

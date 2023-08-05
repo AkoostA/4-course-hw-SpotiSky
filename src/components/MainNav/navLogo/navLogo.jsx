@@ -1,5 +1,5 @@
 import style from "./navLogo.module.css";
-import logo from "../../../img/logo.png";
+import logo from "../../../img/logo-white.png";
 
 function NavLogo() {
   return (
