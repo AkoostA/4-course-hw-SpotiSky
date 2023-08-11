@@ -5,7 +5,6 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
   const audioControl = (text) => {
     switch (text) {
       case "prev":
-        alert("Данный функционал не реализован");
         break;
       case "play":
         audioRef.current.play();
@@ -16,13 +15,11 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
         setPlay(false);
         break;
       case "next":
-        alert("Данный функционал не реализован");
         break;
       case "repeat":
         setRepeat(!repeat);
         break;
       case "shuffle":
-        alert("Данный функционал не реализован");
         break;
 
       default:

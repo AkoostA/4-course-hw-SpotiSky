@@ -21,7 +21,7 @@ function PlayerProgress({ audioRef }) {
     if (audioRef?.current.duration) {
       setDuration(audioRef.current.duration);
     }
-  }, [audioRef.current.duration]);
+  });
 
   useEffect(() => {
     audioRef.current.addEventListener("timeupdate", () => {

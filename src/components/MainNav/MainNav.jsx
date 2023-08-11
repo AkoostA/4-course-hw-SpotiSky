@@ -5,7 +5,7 @@ import NavMenu from "./navMenu/navMenu";
 import NavBurger from "./navBurger/navBurger";
 
 function MainNav() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const toggleVisibility = () => setVisible(!visible);
 

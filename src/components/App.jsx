@@ -13,7 +13,7 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, toggleUser }}>
-      <AppRoutes />;
+      <AppRoutes />
     </UserContext.Provider>
   );
 }
