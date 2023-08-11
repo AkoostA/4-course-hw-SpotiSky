@@ -16,7 +16,7 @@ function NotFound() {
         className={style.notFound__button}
         type="button"
       >
-        На Login страницу
+        На Main страницу
       </button>
     </div>
   );

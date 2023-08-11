@@ -10,7 +10,7 @@ function Сategory() {
   const navigate = useNavigate();
 
   const mainButton = () => {
-    navigate("/main", { replace: true });
+    navigate("/", { replace: true });
   };
 
   const asyncGetCategory = async () => {

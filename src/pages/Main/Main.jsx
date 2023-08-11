@@ -6,7 +6,7 @@ import MainSidebar from "../../components/MainSidebar/MainSidebar";
 import MainBar from "../../components/MainBar/MainBar";
 import getTrackAll from "../../api/Api";
 
-function Main({ setToken }) {
+function Main() {
   const [getError, setGetError] = useState(null);
   const [allTrack, setAllTrack] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ function Main({ setToken }) {
   return (
     <div className={style.container}>
       <main className={style.main}>
-        <MainNav setToken={setToken} />
+        <MainNav />
         <MainCenterBlock
           setPlay={setPlay}
           loading={loading}

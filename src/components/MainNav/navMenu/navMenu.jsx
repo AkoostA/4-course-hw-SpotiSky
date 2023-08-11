@@ -1,16 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./navMenu.module.css";
 
-function NavMenu({ setToken }) {
-  const toggleToken = () => {
-    setToken(false);
+function NavMenu() {
+  const navigate = useNavigate();
+
+  const exit = () => {
+    localStorage.clear();
+    navigate("/login");
   };
 
   return (
     <div className={style.nav__menu}>
       <ul className={style.menu__list}>
         <li className={style.menu__item}>
-          <Link to="/main" className={style.menu__link}>
+          <Link to="/" className={style.menu__link}>
             Главное
           </Link>
         </li>
@@ -20,12 +23,7 @@ function NavMenu({ setToken }) {
           </Link>
         </li>
         <li className={style.menu__item}>
-          <button
-            type="button"
-            onClick={toggleToken}
-            to="/"
-            className={style.menu__link}
-          >
+          <button type="button" onClick={exit} className={style.menu__link}>
             Выйти
           </button>
         </li>

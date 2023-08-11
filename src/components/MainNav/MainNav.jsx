@@ -4,7 +4,7 @@ import NavLogo from "./navLogo/navLogo";
 import NavMenu from "./navMenu/navMenu";
 import NavBurger from "./navBurger/navBurger";
 
-function MainNav({ setToken }) {
+function MainNav() {
   const [visible, setVisible] = useState(false);
 
   const toggleVisibility = () => setVisible(!visible);
@@ -22,7 +22,7 @@ function MainNav({ setToken }) {
         toggleVisibility={toggleVisibility}
         handleKeyDown={handleKeyDown}
       />
-      {visible && <NavMenu setToken={setToken} />}
+      {visible && <NavMenu />}
     </nav>
   );
 }

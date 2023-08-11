@@ -1,8 +1,11 @@
 import { Navigate, Outlet  } from "react-router-dom";
+import { useUserContext } from "../Contexts/Contexts";
 
-function ProtectedRoute({ redirectPath = "/", token }) {
-  if (!token) {
-    return <Navigate to={redirectPath} replace />;
+function ProtectedRoute() {
+  const { user } = useUserContext();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
