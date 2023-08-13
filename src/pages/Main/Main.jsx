@@ -41,7 +41,7 @@ function Main() {
         <MainSidebar loading={loading} />
       </main>
       <div className={style.bar}>
-        {playTrack ? <MainBar loading={loading} playTrack={playTrack} /> : null}
+        {playTrack.id ? <MainBar loading={loading} playTrack={playTrack} /> : null}
       </div>
     </div>
   );

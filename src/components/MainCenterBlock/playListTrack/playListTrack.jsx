@@ -17,9 +17,9 @@ function PlayListTrack({ loading, getError }) {
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
 
-  const toggleTrack = (track) => {
-    dispatch(addPlayTrack(track));
-    dispatch(addActiveTrack({active: true}));
+  const toggleTrack = (index) => {
+    dispatch(addActiveTrack({ ...activeTrack, active: true, iTrack: index }));
+    dispatch(addPlayTrack(allTrack[index]));
   };
 
   if (getError) {
@@ -58,14 +58,16 @@ function PlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          allTrack.map((track) => (
+          allTrack.map((track, index) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
                   {track.id === playTrack.id ? (
                     <div
                       className={
-                        activeTrack.active ? S.track__Active : S.track__nonActive
+                        activeTrack.active
+                          ? S.track__Active
+                          : S.track__nonActive
                       }
                     />
                   ) : (
@@ -77,7 +79,7 @@ function PlayListTrack({ loading, getError }) {
                 <div className={S.titleText}>
                   <button
                     type="button"
-                    onClick={() => toggleTrack(track)}
+                    onClick={() => toggleTrack(index)}
                     className={S.track__titleLink}
                   >
                     {track.name} <span className={S.track__titleSpan} />
@@ -87,7 +89,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__author}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(track)}
+                  onClick={() => toggleTrack(index)}
                   className={S.track__authorLink}
                 >
                   {track.author}
@@ -96,7 +98,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__album}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(track)}
+                  onClick={() => toggleTrack(index)}
                   className={S.track__albumLink}
                 >
                   {track.album}

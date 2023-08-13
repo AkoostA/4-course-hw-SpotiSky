@@ -1,10 +1,11 @@
 /* eslint-disable default-param-last */
-import { ADD_TRACK, PLAY_TRACK, ACTIVE_TRACK } from "../actions/types/types";
+import { ADD_TRACK, PLAY_TRACK, ACTIVE_TRACK, SHUFFLE_TRACKS } from "../actions/types/types";
 
 const initialTracks = {
   allTracks: [],
   playTrack: {},
   activeTrack: {},
+  shuffleTracks: [],
 };
 
 function tracksReducer(state = initialTracks, action) {
@@ -31,6 +32,14 @@ function tracksReducer(state = initialTracks, action) {
       return {
         ...state,
         activeTrack,
+      };
+    }
+    case SHUFFLE_TRACKS: {
+      const { shuffle } = action.payload;
+
+      return {
+        ...state,
+        shuffleTracks: shuffle,
       };
     }
     default:

@@ -1,51 +1,89 @@
-/* eslint-disable no-case-declarations */
 import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import allTracksSelector, {
   activeTrackSelector,
-  playTrackSelector,
+  shuffleTracksSelector,
 } from "../../../store/selectors/selectors";
 import {
   addActiveTrack,
   addPlayTrack,
+  addShuffleTracks,
 } from "../../../store/actions/creators/creators";
 
 function PlayerControls({ audioRef, repeat, setRepeat }) {
   const allTracks = useSelector(allTracksSelector);
-  const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
+  const shuffleTracks = useSelector(shuffleTracksSelector);
   const dispatch = useDispatch();
-  let index;
 
   const audioControl = (text) => {
     switch (text) {
       case "prev":
-        index = allTracks.indexOf(playTrack);
-        dispatch(addActiveTrack({ active: true }));
-        if (index === 0) return;
-        dispatch(addPlayTrack(allTracks[index - 1]));
+        if (activeTrack.iTrack === 0 || activeTrack.iTrack === "shuffle")
+          return;
+        dispatch(
+          addActiveTrack({
+            ...activeTrack,
+            active: true,
+            iTrack: activeTrack.iTrack - 1,
+          })
+        );
+        if (activeTrack.shuffle) {
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.iTrack - 1]));
+        } else {
+          dispatch(addPlayTrack(allTracks[activeTrack.iTrack - 1]));
+        }
         break;
       case "play":
         audioRef.current.play();
-        dispatch(addActiveTrack({ active: true }));
+        dispatch(addActiveTrack({ ...activeTrack, active: true }));
         break;
       case "stop":
         audioRef.current.pause();
-        dispatch(addActiveTrack({ active: false }));
+        dispatch(addActiveTrack({ ...activeTrack, active: false }));
         break;
       case "next":
-        index = allTracks.indexOf(playTrack);
-        dispatch(addActiveTrack({ active: true }));
-        if (index === allTracks.length - 1) return;
-        dispatch(addPlayTrack(allTracks[index + 1]));
+        if (activeTrack.iTrack === allTracks.length - 1) return;
+        if (activeTrack.iTrack === "shuffle") {
+          dispatch(addPlayTrack(shuffleTracks[0]));
+          dispatch(
+            addActiveTrack({
+              ...activeTrack,
+              active: true,
+              iTrack: 0,
+            })
+          );
+          return;
+        }
+        dispatch(
+          addActiveTrack({
+            ...activeTrack,
+            active: true,
+            iTrack: activeTrack.iTrack + 1,
+          })
+        );
+        if (activeTrack.shuffle) {
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.iTrack + 1]));
+        } else {
+          dispatch(addPlayTrack(allTracks[activeTrack.iTrack + 1]));
+        }
         break;
       case "repeat":
         setRepeat(!repeat);
         break;
       case "shuffle":
+        if (activeTrack.shuffle) {
+          dispatch(addActiveTrack({ ...activeTrack, shuffle: false }));
+        } else {
+          dispatch(
+            addActiveTrack({ ...activeTrack, shuffle: true, iTrack: "shuffle" })
+          );
+          const newShuffleTracks = allTracks.map((track) => track);
+          newShuffleTracks.sort(() => Math.random() - 0.5);
+          dispatch(addShuffleTracks(newShuffleTracks));
+        }
         break;
-
       default:
         break;
     }
@@ -115,7 +153,13 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
         className={style.player__btnShuffle}
       >
         <svg className={style.player__btnShuffleSvg} alt="shuffle">
-          <use xlinkHref={`${sprite}#icon-shuffle`} />
+          <use
+            xlinkHref={
+              activeTrack.shuffle
+                ? `${sprite}#icon-shuffleActive`
+                : `${sprite}#icon-shuffle`
+            }
+          />
         </svg>
       </button>
     </div>
