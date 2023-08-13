@@ -1,18 +1,25 @@
-import style from "./playListTrack.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import S from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../Skeleton";
+import { addPlayTrack } from "../../../store/actions/creators/creators";
+import allTracksSelector, { palyTrackSelector } from "../../../store/selectors/selectors";
 
-function PlayListTrack({ loading, allTrack, getError, setTrack, setPlay }) {
+function PlayListTrack({ loading, getError, setTrack }) {
+  const allTrack = useSelector(allTracksSelector);
+  const playTrack = useSelector(palyTrackSelector);
+  const dispatch = useDispatch();
+
   const toggleTrack = (track) => {
+    dispatch(addPlayTrack({...track, play: true}));
     setTrack(track);
-    setPlay(true);
   };
 
   if (getError) {
     return (
-      <div className={style.content__playlist}>
-        <div className={style.playlist__item}>
-          <div className={style.playlist__track}>
+      <div className={S.content__playlist}>
+        <div className={S.playlist__item}>
+          <div className={S.playlist__track}>
             <h1>{getError}</h1>
           </div>
         </div>
@@ -21,70 +28,74 @@ function PlayListTrack({ loading, allTrack, getError, setTrack, setPlay }) {
   }
 
   return (
-    <div className={style.content__playlist}>
-      <div className={style.playlist__item}>
+    <div className={S.content__playlist}>
+      <div className={S.playlist__item}>
         {loading ? (
-          <div className={style.playlist__track}>
-            <div className={style.track__title}>
-              <div className={style.track__titleImage}>
+          <div className={S.playlist__track}>
+            <div className={S.track__title}>
+              <div className={S.track__titleImage}>
                 <Skeleton w="51px" h="51px" />
               </div>
-              <div className={style.titleText}>
+              <div className={S.titleText}>
                 <Skeleton w="356px" h="19px" />
               </div>
             </div>
-            <div className={style.track__author}>
+            <div className={S.track__author}>
               <Skeleton w="271px" h="19px" />
             </div>
-            <div className={style.track__album}>
+            <div className={S.track__album}>
               <Skeleton w="305px" h="19px" />
             </div>
-            <div className={style.time}>
+            <div className={S.time}>
               <Skeleton w="60.8px" h="19px" />
             </div>
           </div>
         ) : (
           allTrack.map((track) => (
-            <div key={track.id} className={style.playlist__track}>
-              <div className={style.track__title}>
-                <div className={style.track__titleImage}>
-                  <svg className={style.track__titleSvg} alt="music">
+            <div key={track.id} className={S.playlist__track}>
+              <div className={S.track__title}>
+                <div className={S.track__titleImage}>
+                  { track.id === playTrack.id ?
+                  <div className={playTrack.play ? S.track__Active : S.track__nonActive} />
+                  :
+                  <svg className={S.track__titleSvg} alt="music">
                     <use xlinkHref={`${sprite}#icon-note`} />
                   </svg>
+                  }
                 </div>
-                <div className={style.titleText}>
+                <div className={S.titleText}>
                   <button
                     type="button"
                     onClick={() => toggleTrack(track)}
-                    className={style.track__titleLink}
+                    className={S.track__titleLink}
                   >
-                    {track.name} <span className={style.track__titleSpan} />
+                    {track.name} <span className={S.track__titleSpan} />
                   </button>
                 </div>
               </div>
-              <div className={style.track__author}>
+              <div className={S.track__author}>
                 <button
                   type="button"
                   onClick={() => toggleTrack(track)}
-                  className={style.track__authorLink}
+                  className={S.track__authorLink}
                 >
                   {track.author}
                 </button>
               </div>
-              <div className={style.track__album}>
+              <div className={S.track__album}>
                 <button
                   type="button"
                   onClick={() => toggleTrack(track)}
-                  className={style.track__albumLink}
+                  className={S.track__albumLink}
                 >
                   {track.album}
                 </button>
               </div>
-              <div className={style.time}>
-                <svg className={style.track__timeSvg} alt="time">
+              <div className={S.time}>
+                <svg className={S.track__timeSvg} alt="time">
                   <use xlinkHref={`${sprite}#icon-like`} />
                 </svg>
-                <span className={style.track__timeText}>
+                <span className={S.track__timeText}>
                   {track.duration_in_seconds}
                 </span>
               </div>

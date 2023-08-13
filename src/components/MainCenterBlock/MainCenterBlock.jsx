@@ -5,11 +5,9 @@ import CenterBlockContent from "./centerBlockContent/centerBlockContent";
 
 function MainCenterBlock({
   loading,
-  allTrack,
   getError,
   setOpenBar,
   setAudio,
-  setPlay,
   setTrack,
 }) {
   return (
@@ -18,9 +16,7 @@ function MainCenterBlock({
       <h2 className={style.centerBlock__title}>Треки</h2>
       <FilterButton />
       <CenterBlockContent
-        setPlay={setPlay}
         loading={loading}
-        allTrack={allTrack}
         getError={getError}
         setOpenBar={setOpenBar}
         setTrack={setTrack}

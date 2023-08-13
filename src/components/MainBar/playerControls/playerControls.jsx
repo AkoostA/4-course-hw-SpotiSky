@@ -1,18 +1,24 @@
+import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
+import { palyTrackSelector } from "../../../store/selectors/selectors";
+import { addPlayTrack } from "../../../store/actions/creators/creators";
 
-function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
+function PlayerControls({ audioRef, repeat, setRepeat }) {
+  const playTrack = useSelector(palyTrackSelector);
+  const dispatch = useDispatch();
+
   const audioControl = (text) => {
     switch (text) {
       case "prev":
         break;
       case "play":
         audioRef.current.play();
-        setPlay(true);
+        dispatch(addPlayTrack({ ...playTrack, play: true }));
         break;
       case "stop":
         audioRef.current.pause();
-        setPlay(false);
+        dispatch(addPlayTrack({ ...playTrack, play: false }));
         break;
       case "next":
         break;
@@ -42,14 +48,16 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
       </button>
       <button
         onClick={() => {
-          audioControl(play ? "stop" : "play");
+          audioControl(playTrack.play ? "stop" : "play");
         }}
         type="button"
         className={style.player__btnPlay}
       >
         <svg className={style.player__btnPlaySvg} alt="play">
           <use
-            xlinkHref={play ? `${sprite}#icon-pause` : `${sprite}#icon-play`}
+            xlinkHref={
+              playTrack.play ? `${sprite}#icon-pause` : `${sprite}#icon-play`
+            }
           />
         </svg>
       </button>

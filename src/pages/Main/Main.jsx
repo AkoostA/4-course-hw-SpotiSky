@@ -10,16 +10,13 @@ import addTracks from "../../store/actions/creators/creators";
 
 function Main() {
   const [getError, setGetError] = useState(null);
-  const [allTrack, setAllTrack] = useState(null);
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState(null);
-  const [play, setPlay] = useState(false);
   const dispatch = useDispatch();
 
   const asyncGetTrackAll = async () => {
     try {
       const response = await getTrackAll();
-      setAllTrack(response);
       dispatch(addTracks(response));
     } catch (error) {
       setGetError(error.message);
@@ -37,9 +34,7 @@ function Main() {
       <main className={style.main}>
         <MainNav />
         <MainCenterBlock
-          setPlay={setPlay}
           loading={loading}
-          allTrack={allTrack}
           getError={getError}
           setTrack={setTrack}
         />
@@ -48,8 +43,6 @@ function Main() {
       <div className={style.bar}>
         {track ? (
           <MainBar
-            play={play}
-            setPlay={setPlay}
             loading={loading}
             track={track}
           />
