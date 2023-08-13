@@ -1,26 +1,44 @@
+/* eslint-disable no-case-declarations */
 import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
-import { palyTrackSelector } from "../../../store/selectors/selectors";
-import { addPlayTrack } from "../../../store/actions/creators/creators";
+import allTracksSelector, {
+  activeTrackSelector,
+  playTrackSelector,
+} from "../../../store/selectors/selectors";
+import {
+  addActiveTrack,
+  addPlayTrack,
+} from "../../../store/actions/creators/creators";
 
 function PlayerControls({ audioRef, repeat, setRepeat }) {
-  const playTrack = useSelector(palyTrackSelector);
+  const allTracks = useSelector(allTracksSelector);
+  const playTrack = useSelector(playTrackSelector);
+  const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
+  let index;
 
   const audioControl = (text) => {
     switch (text) {
       case "prev":
+        index = allTracks.indexOf(playTrack);
+        dispatch(addActiveTrack({ active: true }));
+        if (index === 0) return;
+        dispatch(addPlayTrack(allTracks[index - 1]));
         break;
       case "play":
         audioRef.current.play();
-        dispatch(addPlayTrack({ ...playTrack, play: true }));
+        dispatch(addActiveTrack({ active: true }));
         break;
       case "stop":
         audioRef.current.pause();
-        dispatch(addPlayTrack({ ...playTrack, play: false }));
+        dispatch(addActiveTrack({ active: false }));
         break;
       case "next":
+        index = allTracks.indexOf(playTrack);
+        dispatch(addActiveTrack({ active: true }));
+        if (index === allTracks.length - 1) return;
+        dispatch(addPlayTrack(allTracks[index + 1]));
         break;
       case "repeat":
         setRepeat(!repeat);
@@ -48,7 +66,7 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
       </button>
       <button
         onClick={() => {
-          audioControl(playTrack.play ? "stop" : "play");
+          audioControl(activeTrack.active ? "stop" : "play");
         }}
         type="button"
         className={style.player__btnPlay}
@@ -56,7 +74,9 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
         <svg className={style.player__btnPlaySvg} alt="play">
           <use
             xlinkHref={
-              playTrack.play ? `${sprite}#icon-pause` : `${sprite}#icon-play`
+              activeTrack.active
+                ? `${sprite}#icon-pause`
+                : `${sprite}#icon-play`
             }
           />
         </svg>

@@ -4,7 +4,7 @@ import style from "./MainBar.module.css";
 import PlayerProgress from "./playerProgress/playerProgress";
 import PlayerBlock from "./playerBlock/playerBlock";
 
-function MainBar({ loading, track }) {
+function MainBar({ loading, playTrack }) {
   const audioRef = useRef(null);
   const [repeat, setRepeat] = useState(false);
 
@@ -12,7 +12,7 @@ function MainBar({ loading, track }) {
     <div className={style.bar__content}>
       <audio
         ref={audioRef}
-        src={track ? track.track_file : null}
+        src={playTrack ? playTrack.track_file : null}
         autoPlay
         loop={repeat}
       />
@@ -22,7 +22,6 @@ function MainBar({ loading, track }) {
         setRepeat={setRepeat}
         audioRef={audioRef}
         loading={loading}
-        track={track}
       />
     </div>
   );

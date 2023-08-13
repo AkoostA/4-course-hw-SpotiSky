@@ -8,7 +8,6 @@ function MainCenterBlock({
   getError,
   setOpenBar,
   setAudio,
-  setTrack,
 }) {
   return (
     <div className={style.main__centerBlock}>
@@ -19,7 +18,6 @@ function MainCenterBlock({
         loading={loading}
         getError={getError}
         setOpenBar={setOpenBar}
-        setTrack={setTrack}
         setAudio={setAudio}
       />
     </div>

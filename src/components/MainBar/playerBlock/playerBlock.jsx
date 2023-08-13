@@ -8,7 +8,6 @@ function PlayerBlock({
   audioRef,
   setRepeat,
   repeat,
-  track,
 }) {
   return (
     <div className={style.bar__playerBlock}>
@@ -18,7 +17,7 @@ function PlayerBlock({
           setRepeat={setRepeat}
           audioRef={audioRef}
         />
-        <TrackPlay loading={loading} track={track} />
+        <TrackPlay loading={loading} />
       </div>
       <BarVolume audioRef={audioRef} />
     </div>

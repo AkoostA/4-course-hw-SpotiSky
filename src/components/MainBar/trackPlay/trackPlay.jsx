@@ -1,9 +1,13 @@
+import { useSelector } from "react-redux";
 import style from "./trackPlay.module.css";
 import Skeleton from "../../Skeleton";
 import sprite from "../../../img/icon/sprite.svg";
 import TrackLikeDis from "../trackLikeDis/trackLikeDis";
+import { playTrackSelector } from "../../../store/selectors/selectors";
 
-function TrackPlay({ loading, track }) {
+function TrackPlay({ loading }) {
+  const playTrack = useSelector(playTrackSelector);
+
   return (
     <div className={style.player__trackPlay}>
       {loading ? (
@@ -27,12 +31,12 @@ function TrackPlay({ loading, track }) {
           </div>
           <div className={style.trackPlay__author}>
             <button type="button" className={style.trackPlay__authorLink}>
-              {track.name}
+              {playTrack.name}
             </button>
           </div>
           <div className={style.trackPlay__album}>
             <button type="button" className={style.trackPlay__albumLink}>
-              {track.author}
+              {playTrack.author}
             </button>
           </div>
         </div>

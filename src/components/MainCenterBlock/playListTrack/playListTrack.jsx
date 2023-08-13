@@ -2,17 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import S from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../Skeleton";
-import { addPlayTrack } from "../../../store/actions/creators/creators";
-import allTracksSelector, { palyTrackSelector } from "../../../store/selectors/selectors";
+import {
+  addActiveTrack,
+  addPlayTrack,
+} from "../../../store/actions/creators/creators";
+import allTracksSelector, {
+  activeTrackSelector,
+  playTrackSelector,
+} from "../../../store/selectors/selectors";
 
-function PlayListTrack({ loading, getError, setTrack }) {
+function PlayListTrack({ loading, getError }) {
   const allTrack = useSelector(allTracksSelector);
-  const playTrack = useSelector(palyTrackSelector);
+  const playTrack = useSelector(playTrackSelector);
+  const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
 
   const toggleTrack = (track) => {
-    dispatch(addPlayTrack({...track, play: true}));
-    setTrack(track);
+    dispatch(addPlayTrack(track));
+    dispatch(addActiveTrack({active: true}));
   };
 
   if (getError) {
@@ -55,13 +62,17 @@ function PlayListTrack({ loading, getError, setTrack }) {
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
-                  { track.id === playTrack.id ?
-                  <div className={playTrack.play ? S.track__Active : S.track__nonActive} />
-                  :
-                  <svg className={S.track__titleSvg} alt="music">
-                    <use xlinkHref={`${sprite}#icon-note`} />
-                  </svg>
-                  }
+                  {track.id === playTrack.id ? (
+                    <div
+                      className={
+                        activeTrack.active ? S.track__Active : S.track__nonActive
+                      }
+                    />
+                  ) : (
+                    <svg className={S.track__titleSvg} alt="music">
+                      <use xlinkHref={`${sprite}#icon-note`} />
+                    </svg>
+                  )}
                 </div>
                 <div className={S.titleText}>
                   <button

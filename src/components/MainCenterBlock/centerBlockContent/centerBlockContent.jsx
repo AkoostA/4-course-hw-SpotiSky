@@ -6,7 +6,6 @@ function CenterBlockContent({
   loading,
   getError,
   setOpenBar,
-  setTrack,
   setAudio,
 }) {
   return (
@@ -16,7 +15,6 @@ function CenterBlockContent({
         loading={loading}
         getError={getError}
         setOpenBar={setOpenBar}
-        setTrack={setTrack}
         setAudio={setAudio}
       />
     </div>

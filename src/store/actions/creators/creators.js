@@ -1,4 +1,4 @@
-import { ADD_TRACK, PLAY_TRACK, ID_TRACK } from "../types/types";
+import { ADD_TRACK, PLAY_TRACK, ACTIVE_TRACK } from "../types/types";
 
 const addTracks = (tracks) => ({
   type: ADD_TRACK,
@@ -10,9 +10,9 @@ export const addPlayTrack = (playTrack) => ({
   payload: { playTrack },
 });
 
-export const addIdTrack = (idTrack) => ({
-  type: ID_TRACK,
-  payload: { idTrack },
+export const addActiveTrack = (activeTrack) => ({
+  type: ACTIVE_TRACK,
+  payload: { activeTrack },
 });
 
 export default addTracks;

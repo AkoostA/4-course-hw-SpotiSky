@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 12px;
     width: 100%;
-    height: 1000px;
+    height: 600px;
     margin-bottom: 12px;
     overflow-y: scroll;
     scrollbar-color: white, gray;
