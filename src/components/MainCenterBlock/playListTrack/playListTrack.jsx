@@ -17,9 +17,9 @@ function PlayListTrack({ loading, getError }) {
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
 
-  const toggleTrack = (index) => {
-    dispatch(addActiveTrack({ ...activeTrack, active: true, iTrack: index }));
-    dispatch(addPlayTrack(allTrack[index]));
+  const toggleTrack = (i) => {
+    dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
+    dispatch(addPlayTrack(allTrack[i]));
   };
 
   if (getError) {

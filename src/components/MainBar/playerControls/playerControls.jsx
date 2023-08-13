@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
@@ -20,19 +21,22 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
   const audioControl = (text) => {
     switch (text) {
       case "prev":
-        if (activeTrack.iTrack === 0 || activeTrack.iTrack === "shuffle")
+        if (audioRef.current.currentTime >= 5) {
+          audioRef.current.currentTime = 0;
           return;
+        }
+        if (activeTrack.index === 0 || activeTrack.index === "shuffle") return;
         dispatch(
           addActiveTrack({
             ...activeTrack,
             active: true,
-            iTrack: activeTrack.iTrack - 1,
+            index: activeTrack.index - 1,
           })
         );
         if (activeTrack.shuffle) {
-          dispatch(addPlayTrack(shuffleTracks[activeTrack.iTrack - 1]));
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.index - 1]));
         } else {
-          dispatch(addPlayTrack(allTracks[activeTrack.iTrack - 1]));
+          dispatch(addPlayTrack(allTracks[activeTrack.index - 1]));
         }
         break;
       case "play":
@@ -44,14 +48,14 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
         dispatch(addActiveTrack({ ...activeTrack, active: false }));
         break;
       case "next":
-        if (activeTrack.iTrack === allTracks.length - 1) return;
-        if (activeTrack.iTrack === "shuffle") {
+        if (activeTrack.index === allTracks.length - 1) return;
+        if (activeTrack.index === "shuffle") {
           dispatch(addPlayTrack(shuffleTracks[0]));
           dispatch(
             addActiveTrack({
               ...activeTrack,
               active: true,
-              iTrack: 0,
+              index: 0,
             })
           );
           return;
@@ -60,13 +64,13 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
           addActiveTrack({
             ...activeTrack,
             active: true,
-            iTrack: activeTrack.iTrack + 1,
+            index: activeTrack.index + 1,
           })
         );
         if (activeTrack.shuffle) {
-          dispatch(addPlayTrack(shuffleTracks[activeTrack.iTrack + 1]));
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.index + 1]));
         } else {
-          dispatch(addPlayTrack(allTracks[activeTrack.iTrack + 1]));
+          dispatch(addPlayTrack(allTracks[activeTrack.index + 1]));
         }
         break;
       case "repeat":
@@ -77,7 +81,7 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
           dispatch(addActiveTrack({ ...activeTrack, shuffle: false }));
         } else {
           dispatch(
-            addActiveTrack({ ...activeTrack, shuffle: true, iTrack: "shuffle" })
+            addActiveTrack({ ...activeTrack, shuffle: true, index: "shuffle" })
           );
           const newShuffleTracks = allTracks.map((track) => track);
           newShuffleTracks.sort(() => Math.random() - 0.5);
