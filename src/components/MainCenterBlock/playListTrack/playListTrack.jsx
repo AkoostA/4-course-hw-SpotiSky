@@ -10,6 +10,7 @@ import allTracksSelector, {
   activeTrackSelector,
   playTrackSelector,
 } from "../../../store/selectors/selectors";
+import formatTime from "../../Helper/Helper";
 
 function PlayListTrack({ loading, getError }) {
   const allTrack = useSelector(allTracksSelector);
@@ -109,7 +110,7 @@ function PlayListTrack({ loading, getError }) {
                   <use xlinkHref={`${sprite}#icon-like`} />
                 </svg>
                 <span className={S.track__timeText}>
-                  {track.duration_in_seconds}
+                  {formatTime(track.duration_in_seconds)}
                 </span>
               </div>
             </div>
