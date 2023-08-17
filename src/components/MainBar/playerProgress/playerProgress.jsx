@@ -1,17 +1,25 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/media-has-caption */
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./playerProgress.module.css";
+import {
+  addActiveTrack,
+  addPlayTrack,
+} from "../../../store/actions/creators/creators";
+import allTracksSelector, {
+  activeTrackSelector,
+  shuffleTracksSelector,
+} from "../../../store/selectors/selectors";
+import formatTime from "../../Helper/Helper";
 
 function PlayerProgress({ audioRef }) {
   const [value, setValue] = useState("1");
   const [duration, setDuration] = useState("0");
-
-  const formatTime = (valueInDuration) => {
-    const min = Math.floor(valueInDuration / 60);
-    const sec = `0${valueInDuration % 60}`.slice(-2);
-    return `${min}:${sec}`;
-  };
+  const allTracks = useSelector(allTracksSelector);
+  const activeTrack = useSelector(activeTrackSelector);
+  const shuffleTrack = useSelector(shuffleTracksSelector);
+  const dispatch = useDispatch();
 
   const toggleProgress = (e) => {
     audioRef.current.currentTime = e.target.value;
@@ -21,7 +29,7 @@ function PlayerProgress({ audioRef }) {
     if (audioRef?.current.duration) {
       setDuration(audioRef.current.duration);
     }
-  }, [audioRef.current.duration]);
+  });
 
   useEffect(() => {
     audioRef.current.addEventListener("timeupdate", () => {
@@ -33,6 +41,20 @@ function PlayerProgress({ audioRef }) {
       };
     });
   });
+
+  useEffect(() => {
+    if (value === duration) {
+      if (activeTrack.index === allTracks.length - 1) return;
+      dispatch(
+        addActiveTrack({ ...activeTrack, index: activeTrack.index + 1 })
+      );
+      if (activeTrack.shuffle) {
+        dispatch(addPlayTrack(shuffleTrack[activeTrack.index + 1]));
+      } else {
+        dispatch(addPlayTrack(allTracks[activeTrack.index + 1]));
+      }
+    }
+  }, [value]);
 
   return (
     <>

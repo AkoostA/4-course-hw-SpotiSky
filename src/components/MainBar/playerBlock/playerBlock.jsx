@@ -5,12 +5,9 @@ import BarVolume from "../barVolume/barVolume";
 
 function PlayerBlock({
   loading,
-  play,
-  setPlay,
   audioRef,
   setRepeat,
   repeat,
-  track,
 }) {
   return (
     <div className={style.bar__playerBlock}>
@@ -19,10 +16,8 @@ function PlayerBlock({
           repeat={repeat}
           setRepeat={setRepeat}
           audioRef={audioRef}
-          play={play}
-          setPlay={setPlay}
         />
-        <TrackPlay loading={loading} track={track} />
+        <TrackPlay loading={loading} />
       </div>
       <BarVolume audioRef={audioRef} />
     </div>

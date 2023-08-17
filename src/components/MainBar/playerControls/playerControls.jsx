@@ -1,30 +1,93 @@
+/* eslint-disable no-param-reassign */
+import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
+import allTracksSelector, {
+  activeTrackSelector,
+  shuffleTracksSelector,
+} from "../../../store/selectors/selectors";
+import {
+  addActiveTrack,
+  addPlayTrack,
+  addShuffleTracks,
+} from "../../../store/actions/creators/creators";
 
-function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
+function PlayerControls({ audioRef, repeat, setRepeat }) {
+  const allTracks = useSelector(allTracksSelector);
+  const activeTrack = useSelector(activeTrackSelector);
+  const shuffleTracks = useSelector(shuffleTracksSelector);
+  const dispatch = useDispatch();
+
   const audioControl = (text) => {
     switch (text) {
       case "prev":
-        alert("Данный функционал не реализован");
+        if (audioRef.current.currentTime >= 5) {
+          audioRef.current.currentTime = 0;
+          return;
+        }
+        if (activeTrack.index === 0 || activeTrack.index === "shuffle") return;
+        dispatch(
+          addActiveTrack({
+            ...activeTrack,
+            active: true,
+            index: activeTrack.index - 1,
+          })
+        );
+        if (activeTrack.shuffle) {
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.index - 1]));
+        } else {
+          dispatch(addPlayTrack(allTracks[activeTrack.index - 1]));
+        }
         break;
       case "play":
         audioRef.current.play();
-        setPlay(true);
+        dispatch(addActiveTrack({ ...activeTrack, active: true }));
         break;
       case "stop":
         audioRef.current.pause();
-        setPlay(false);
+        dispatch(addActiveTrack({ ...activeTrack, active: false }));
         break;
       case "next":
-        alert("Данный функционал не реализован");
+        if (activeTrack.index === allTracks.length - 1) return;
+        if (activeTrack.index === "shuffle") {
+          dispatch(addPlayTrack(shuffleTracks[0]));
+          dispatch(
+            addActiveTrack({
+              ...activeTrack,
+              active: true,
+              index: 0,
+            })
+          );
+          return;
+        }
+        dispatch(
+          addActiveTrack({
+            ...activeTrack,
+            active: true,
+            index: activeTrack.index + 1,
+          })
+        );
+        if (activeTrack.shuffle) {
+          dispatch(addPlayTrack(shuffleTracks[activeTrack.index + 1]));
+        } else {
+          dispatch(addPlayTrack(allTracks[activeTrack.index + 1]));
+        }
         break;
       case "repeat":
         setRepeat(!repeat);
         break;
       case "shuffle":
-        alert("Данный функционал не реализован");
+        if (activeTrack.shuffle) {
+          dispatch(addActiveTrack({ ...activeTrack, shuffle: false }));
+        } else {
+          dispatch(
+            addActiveTrack({ ...activeTrack, shuffle: true, index: "shuffle" })
+          );
+          const newShuffleTracks = allTracks.map((track) => track);
+          newShuffleTracks.sort(() => Math.random() - 0.5);
+          dispatch(addShuffleTracks(newShuffleTracks));
+        }
         break;
-
       default:
         break;
     }
@@ -45,14 +108,18 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
       </button>
       <button
         onClick={() => {
-          audioControl(play ? "stop" : "play");
+          audioControl(activeTrack.active ? "stop" : "play");
         }}
         type="button"
         className={style.player__btnPlay}
       >
         <svg className={style.player__btnPlaySvg} alt="play">
           <use
-            xlinkHref={play ? `${sprite}#icon-pause` : `${sprite}#icon-play`}
+            xlinkHref={
+              activeTrack.active
+                ? `${sprite}#icon-pause`
+                : `${sprite}#icon-play`
+            }
           />
         </svg>
       </button>
@@ -90,7 +157,13 @@ function PlayerControls({ audioRef, play, setPlay, repeat, setRepeat }) {
         className={style.player__btnShuffle}
       >
         <svg className={style.player__btnShuffleSvg} alt="shuffle">
-          <use xlinkHref={`${sprite}#icon-shuffle`} />
+          <use
+            xlinkHref={
+              activeTrack.shuffle
+                ? `${sprite}#icon-shuffleActive`
+                : `${sprite}#icon-shuffle`
+            }
+          />
         </svg>
       </button>
     </div>
