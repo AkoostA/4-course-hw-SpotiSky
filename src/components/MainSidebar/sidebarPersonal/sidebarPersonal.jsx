@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../Contexts/Contexts";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from "../../../store/selectors/selectors";
 import sprite from "../../../img/icon/sprite.svg";
 import S from "./sidebarPersonal.module.css";
+import { addUser } from "../../../store/actions/creators/creators";
 
 function SidebarPersonal() {
-  const { user } = useUserContext();
+  const user = useSelector(userSelector);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const exit = () => {
+    dispatch(addUser(null));
     localStorage.clear();
     navigate("/login");
   };

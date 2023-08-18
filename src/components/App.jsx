@@ -1,21 +1,17 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { useState } from "react";
-import { UserContext } from "./Contexts/Contexts";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import AppRoutes from "./AppRoutes/AppRoutes";
+import { addUser } from "../store/actions/creators/creators";
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const dispatch = useDispatch();
 
-  const toggleUser = (newUser) => {
-    setUser(newUser);
-    localStorage.setItem("user", JSON.stringify(newUser));
-  };
+  useEffect(() => {
+    dispatch(addUser(JSON.parse(localStorage.getItem("user"))));
+  }, []);
 
-  return (
-    <UserContext.Provider value={{ user, toggleUser }}>
-      <AppRoutes />
-    </UserContext.Provider>
-  );
+  return <AppRoutes />;
 }
 
 export default App;

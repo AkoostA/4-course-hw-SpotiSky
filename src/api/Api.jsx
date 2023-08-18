@@ -51,4 +51,30 @@ function getCategory({ id }) {
   });
 }
 
-export { getCategory, getRegister, getLogin };
+function getFavoritesTrack({ token }) {
+  return fetch("https://painassasin.online/catalog/track/favorite/all/", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200)
+      throw new Error("Не удалось загрузить плейлист, попробуйте позже");
+    return response.json();
+  });
+}
+
+function getToken({ email, password }) {
+  return fetch("https://painassasin.online/user/token/", {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+}
+
+export { getCategory, getRegister, getLogin, getFavoritesTrack, getToken };

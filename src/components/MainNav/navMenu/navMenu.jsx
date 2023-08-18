@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../../store/actions/creators/creators";
 import style from "./navMenu.module.css";
 
 function NavMenu() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const exit = () => {
+    dispatch(addUser(null));
     localStorage.clear();
     navigate("/login");
   };

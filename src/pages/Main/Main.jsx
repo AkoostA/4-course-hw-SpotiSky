@@ -34,14 +34,13 @@ function Main() {
     <div className={style.container}>
       <main className={style.main}>
         <MainNav />
-        <MainCenterBlock
-          loading={loading}
-          getError={getError}
-        />
+        <MainCenterBlock loading={loading} getError={getError} />
         <MainSidebar loading={loading} />
       </main>
       <div className={style.bar}>
-        {playTrack.id ? <MainBar loading={loading} playTrack={playTrack} /> : null}
+        {playTrack.id ? (
+          <MainBar loading={loading} playTrack={playTrack} />
+        ) : null}
       </div>
     </div>
   );
