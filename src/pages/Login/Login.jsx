@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLogin, getToken } from "../../api/Api";
-import { addUser } from "../../store/actions/creators/creators";
-import { lowString } from "../../components/Helper/Helper";
+import { addToken, addUser } from "../../store/actions/creators/creators";
 import logo from "../../img/logo-black.png";
 import S from "./Login.module.css";
 
@@ -24,18 +23,19 @@ function Login() {
     if (newUser.email) throw new Error(newUser.email[0]);
     if (newUser.username) throw new Error(newUser.username[0]);
     if (newUser.password) throw new Error(newUser.password[0]);
-    if (newUser.detail) throw new Error(newUser.detail[0]);
+    if (newUser.detail) throw new Error(newUser.detail);
   };
 
   const handleLogin = async () => {
     try {
       validateInput();
       setDisabled(true);
-      const newUser = await getLogin({ email: lowString(email), password });
+      const newUser = await getLogin({ email, password });
       if (!newUser.id) getError(newUser);
-      const newToken = await getToken({ email: lowString(email), password });
+      const newToken = await getToken({ email, password });
       localStorage.setItem("user", JSON.stringify(newUser));
-      dispatch(addUser({ ...newUser, token: newToken.refresh }));
+      dispatch(addUser(newUser));
+      dispatch(addToken(newToken));
       navigate("/");
     } catch (error) {
       setError(error.message);

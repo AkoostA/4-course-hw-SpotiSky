@@ -4,6 +4,8 @@ import {
   ACTIVE_TRACK,
   SHUFFLE_TRACKS,
   ADD_USER,
+  FAVORITES_TRACKS,
+  ADD_TOKEN,
 } from "../types/types";
 
 const addTracks = (tracks) => ({
@@ -29,6 +31,16 @@ export const addShuffleTracks = (shuffle) => ({
 export const addUser = (user) => ({
   type: ADD_USER,
   payload: { user },
+});
+
+export const addFavoritesTracks = (favoriteTracks) => ({
+  type: FAVORITES_TRACKS,
+  payload: { favoriteTracks },
+});
+
+export const addToken = (token) => ({
+  type: ADD_TOKEN,
+  payload: { token },
 });
 
 export default addTracks;

@@ -8,7 +8,7 @@ export default function getTrackAll() {
   });
 }
 
-function getRegister({ email, username, password }) {
+export function getRegister({ email, username, password }) {
   return fetch("https://painassasin.online/user/signup/", {
     method: "POST",
     body: JSON.stringify({
@@ -25,7 +25,7 @@ function getRegister({ email, username, password }) {
   });
 }
 
-function getLogin({ email, password }) {
+export function getLogin({ email, password }) {
   return fetch("https://painassasin.online/user/login/", {
     method: "POST",
     body: JSON.stringify({
@@ -41,7 +41,7 @@ function getLogin({ email, password }) {
   });
 }
 
-function getCategory({ id }) {
+export function getCategory({ id }) {
   return fetch(`https://painassasin.online/catalog/selection/${id}`, {
     method: "GET",
   }).then((response) => {
@@ -51,20 +51,19 @@ function getCategory({ id }) {
   });
 }
 
-function getFavoritesTrack({ token }) {
+export function getFavoritesTracks(token) {
   return fetch("https://painassasin.online/catalog/track/favorite/all/", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }).then((response) => {
-    if (response.status !== 200)
-      throw new Error("Не удалось загрузить плейлист, попробуйте позже");
+    if (response.status === 401) throw new Error("Токен протух");
     return response.json();
   });
 }
 
-function getToken({ email, password }) {
+export function getToken({ email, password }) {
   return fetch("https://painassasin.online/user/token/", {
     method: "POST",
     body: JSON.stringify({
@@ -77,4 +76,15 @@ function getToken({ email, password }) {
   }).then((response) => response.json());
 }
 
-export { getCategory, getRegister, getLogin, getFavoritesTrack, getToken };
+export function refreshToken(token) {
+  return fetch("https://painassasin.online/user/token/refresh/", {
+    method: "POST",
+    body: JSON.stringify({
+      refresh: { token },
+    }),
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+}

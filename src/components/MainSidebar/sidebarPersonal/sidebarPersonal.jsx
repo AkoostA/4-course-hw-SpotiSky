@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../../store/selectors/selectors";
 import sprite from "../../../img/icon/sprite.svg";
 import S from "./sidebarPersonal.module.css";
-import { addUser } from "../../../store/actions/creators/creators";
+import { addPlayTrack, addUser } from "../../../store/actions/creators/creators";
 
 function SidebarPersonal() {
   const user = useSelector(userSelector);
@@ -12,6 +12,7 @@ function SidebarPersonal() {
 
   const exit = () => {
     dispatch(addUser(null));
+    dispatch(addPlayTrack({}));
     localStorage.clear();
     navigate("/login");
   };

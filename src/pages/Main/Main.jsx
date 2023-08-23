@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import style from "./Main.module.css";
+import { useDispatch } from "react-redux";
 import MainNav from "../../components/MainNav/MainNav";
 import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
 import MainSidebar from "../../components/MainSidebar/MainSidebar";
-import MainBar from "../../components/MainBar/MainBar";
 import getTrackAll from "../../api/Api";
 import addTracks from "../../store/actions/creators/creators";
-import { playTrackSelector } from "../../store/selectors/selectors";
+import S from "./Main.module.css";
 
 function Main() {
   const [getError, setGetError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const playTrack = useSelector(playTrackSelector);
   const dispatch = useDispatch();
 
   const asyncGetTrackAll = async () => {
@@ -31,18 +28,11 @@ function Main() {
   }, []);
 
   return (
-    <div className={style.container}>
-      <main className={style.main}>
-        <MainNav />
-        <MainCenterBlock loading={loading} getError={getError} />
-        <MainSidebar loading={loading} />
-      </main>
-      <div className={style.bar}>
-        {playTrack.id ? (
-          <MainBar loading={loading} playTrack={playTrack} />
-        ) : null}
-      </div>
-    </div>
+    <main className={S.main}>
+      <MainNav />
+      <MainCenterBlock loading={loading} getError={getError} />
+      <MainSidebar loading={loading} />
+    </main>
   );
 }
 

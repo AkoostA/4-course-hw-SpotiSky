@@ -2,14 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getRegister, getToken } from "../../api/Api";
-import { addUser } from "../../store/actions/creators/creators";
+import { addToken, addUser } from "../../store/actions/creators/creators";
+import { safeString } from "../../components/Helper/Helper";
 import logo from "../../img/logo-black.png";
 import S from "./Register.module.css";
-import {
-  lowString,
-  safeString,
-  uppString,
-} from "../../components/Helper/Helper";
 
 function Register() {
   const [errorLog, setError] = useState(null);
@@ -40,14 +36,15 @@ function Register() {
       validateInput();
       setDisabled(true);
       const newUser = await getRegister({
-        email: lowString(safeString(email)),
-        username: uppString(safeString(username)),
+        email: safeString(email),
+        username: safeString(username),
         password: safeString(password),
       });
       if (!newUser.id) getError(newUser);
-      const newToken = await getToken({ email: lowString(email), password });
+      const newToken = await getToken({ email, password });
       localStorage.setItem("user", JSON.stringify(newUser));
-      dispatch(addUser({ ...newUser, token: newToken.refresh }));
+      dispatch(addUser(newUser));
+      dispatch(addToken(newToken));
       navigate("/");
     } catch (error) {
       setError(error.message);
