@@ -1,27 +1,52 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   addActiveTrack,
+  addFavoritesTracks,
   addPlayTrack,
 } from "../../../store/actions/creators/creators";
 import {
   activeTrackSelector,
   favoritesTracksSelector,
   playTrackSelector,
+  tokenSelector,
 } from "../../../store/selectors/selectors";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../../components/Skeleton";
 import formatTime from "../../../components/Helper/Helper";
 import S from "./FavoritesPlayListTrack.module.css";
+import { disLike, getFavoritesTracks } from "../../../api/Api";
 
 export default function FavoritesPlayListTrack({ loading, getError }) {
+  const [disabled, setDisabled] = useState(false);
+  const token = useSelector(tokenSelector);
   const favoritesTracks = useSelector(favoritesTracksSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleTrack = (i) => {
     dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
     dispatch(addPlayTrack(favoritesTracks[i]));
+  };
+
+  const toggleLike = async (track) => {
+    try {
+      setDisabled(true);
+      await disLike({ token: token.access, id: track.id });
+      const response = await getFavoritesTracks(token.access);
+      dispatch(addFavoritesTracks(response));
+    } catch (error) {
+      if (error.message === "Токен протух") {
+        localStorage.clear();
+        dispatch(addPlayTrack({}));
+        navigate("/login");
+      }
+    } finally {
+      setDisabled(false);
+    }
   };
 
   if (getError) {
@@ -119,9 +144,16 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
                 </button>
               </div>
               <div className={S.time}>
-                <svg className={S.track__timeSvg} alt="time">
-                  <use xlinkHref={`${sprite}#icon-like`} />
-                </svg>
+                <button
+                  disabled={disabled}
+                  onClick={() => toggleLike(track)}
+                  type="button"
+                  className={S.track__buttonLike}
+                >
+                  <svg className={S.track__timeSvg} alt="time">
+                    <use xlinkHref={`${sprite}#icon-likeActive`} />
+                  </svg>
+                </button>
                 <span className={S.track__timeText}>
                   {formatTime(track.duration_in_seconds)}
                 </span>

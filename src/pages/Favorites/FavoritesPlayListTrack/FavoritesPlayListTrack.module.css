@@ -150,6 +150,11 @@
     color: #696969;
 }
 
+.track__buttonLike {
+    background: transparent;
+    border: none;
+}
+
 @keyframes bubble_out {
 
     0%,

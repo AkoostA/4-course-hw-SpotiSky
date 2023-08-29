@@ -85,6 +85,29 @@ export function refreshToken(token) {
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json());
+}
+
+export function addLike({ token, id }) {
+  return fetch(`https://painassasin.online/catalog/track/${id}/favorite/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    if (response.status === 401) throw new Error("Токен протух");
+    return response.json();
+  });
+}
+
+export function disLike({ token, id }) {
+  return fetch(`https://painassasin.online/catalog/track/${id}/favorite/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    if (response.status === 401) throw new Error("Токен протух");
+    return response.json();
+  });
 }
