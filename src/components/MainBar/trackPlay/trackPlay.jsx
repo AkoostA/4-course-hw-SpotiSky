@@ -1,46 +1,31 @@
 import { useSelector } from "react-redux";
-import style from "./trackPlay.module.css";
-import Skeleton from "../../Skeleton";
+import { playTrackSelector } from "../../../store/selectors/selectors";
 import sprite from "../../../img/icon/sprite.svg";
 import TrackLikeDis from "../trackLikeDis/trackLikeDis";
-import { playTrackSelector } from "../../../store/selectors/selectors";
+import S from "./trackPlay.module.css";
 
-function TrackPlay({ loading }) {
+function TrackPlay() {
   const playTrack = useSelector(playTrackSelector);
 
   return (
-    <div className={style.player__trackPlay}>
-      {loading ? (
-        <div className={style.trackPlay__contain}>
-          <div className={style.trackPlay__image}>
-            <Skeleton w="51px" h="51px" />
-          </div>
-          <div className={style.trackPlay__author}>
-            <Skeleton w="59px" h="15px" />
-          </div>
-          <div className={style.trackPlay__album}>
-            <Skeleton w="59px" h="15px" />
-          </div>
+    <div className={S.player__trackPlay}>
+      <div className={S.trackPlay__contain}>
+        <div className={S.trackPlay__image}>
+          <svg className={S.trackPlay__svg} alt="music">
+            <use xlinkHref={`${sprite}#icon-note`} />
+          </svg>
         </div>
-      ) : (
-        <div className={style.trackPlay__contain}>
-          <div className={style.trackPlay__image}>
-            <svg className={style.trackPlay__svg} alt="music">
-              <use xlinkHref={`${sprite}#icon-note`} />
-            </svg>
-          </div>
-          <div className={style.trackPlay__author}>
-            <button type="button" className={style.trackPlay__authorLink}>
-              {playTrack.name}
-            </button>
-          </div>
-          <div className={style.trackPlay__album}>
-            <button type="button" className={style.trackPlay__albumLink}>
-              {playTrack.author}
-            </button>
-          </div>
+        <div className={S.trackPlay__author}>
+          <button type="button" className={S.trackPlay__authorLink}>
+            {playTrack.name}
+          </button>
         </div>
-      )}
+        <div className={S.trackPlay__album}>
+          <button type="button" className={S.trackPlay__albumLink}>
+            {playTrack.author}
+          </button>
+        </div>
+      </div>
       <TrackLikeDis />
     </div>
   );

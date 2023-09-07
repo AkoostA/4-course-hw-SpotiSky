@@ -1,15 +1,34 @@
 /* eslint-disable default-param-last */
-import { ADD_TRACK, PLAY_TRACK, ACTIVE_TRACK, SHUFFLE_TRACKS } from "../actions/types/types";
+import {
+  ADD_TRACK,
+  PLAY_TRACK,
+  ACTIVE_TRACK,
+  SHUFFLE_TRACKS,
+  ADD_USER,
+  FAVORITES_TRACKS,
+  ADD_TOKEN,
+} from "../actions/types/types";
 
 const initialTracks = {
+  user: {},
   allTracks: [],
   playTrack: {},
   activeTrack: {},
   shuffleTracks: [],
+  favoriteTracks: [],
+  token: {},
 };
 
 function tracksReducer(state = initialTracks, action) {
   switch (action.type) {
+    case ADD_USER: {
+      const { user } = action.payload;
+
+      return {
+        ...state,
+        user,
+      };
+    }
     case ADD_TRACK: {
       const { tracks } = action.payload;
 
@@ -40,6 +59,22 @@ function tracksReducer(state = initialTracks, action) {
       return {
         ...state,
         shuffleTracks: shuffle,
+      };
+    }
+    case FAVORITES_TRACKS: {
+      const { favoriteTracks } = action.payload;
+
+      return {
+        ...state,
+        favoriteTracks,
+      };
+    }
+    case ADD_TOKEN: {
+      const { token } = action.payload;
+
+      return {
+        ...state,
+        token,
       };
     }
     default:

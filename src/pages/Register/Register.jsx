@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getRegister, getToken } from "../../api/Api";
+import { addToken, addUser } from "../../store/actions/creators/creators";
+import { safeString } from "../../components/Helper/Helper";
 import logo from "../../img/logo-black.png";
 import S from "./Register.module.css";
-import { getRegister } from "../../api/Api";
-import { useUserContext } from "../../components/Contexts/Contexts";
 
 function Register() {
   const [errorLog, setError] = useState(null);
@@ -12,59 +14,42 @@ function Register() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { toggleUser } = useUserContext();
 
-  const getRegisterCheck = (newUser) => {
-    if (newUser.email) {
-      if (newUser.email !== email) {
-        setError(newUser.email[0]);
-        return;
-      }
-    }
+  const validateInput = () => {
+    if (!email) throw new Error("Не введена почта");
+    if (!username) throw new Error("Не введен логин");
+    if (!password) throw new Error("Не введен пароль");
+    if (!repeatPassword) throw new Error("Не введен повторный пароль");
+    if (password !== repeatPassword) throw new Error("Пароль не совпадает");
+  };
 
-    if (newUser.username) {
-      if (newUser.username !== username) {
-        setError(newUser.username[0]);
-        return;
-      }
-    }
-
-    if (newUser.password) {
-      if (newUser.password !== password) {
-        setError(newUser.password[0]);
-        return;
-      }
-    }
-
-    toggleUser(newUser);
-    navigate("/");
+  const getError = (newUser) => {
+    if (newUser.email) throw new Error(newUser.email[0]);
+    if (newUser.username) throw new Error(newUser.username[0]);
+    if (newUser.password) throw new Error(newUser.password[0]);
   };
 
   const handleRegister = async () => {
     try {
+      validateInput();
       setDisabled(true);
-      const response = await getRegister({ email, username, password });
-      getRegisterCheck(response);
+      const newUser = await getRegister({
+        email: safeString(email),
+        username: safeString(username),
+        password: safeString(password),
+      });
+      if (!newUser.id) getError(newUser);
+      const newToken = await getToken({ email, password });
+      localStorage.setItem("user", JSON.stringify(newUser));
+      dispatch(addUser(newUser));
+      dispatch(addToken(newToken));
+      navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
       setDisabled(false);
-    }
-  };
-
-  const registerCheck = () => {
-    try {
-      if (!email || !username || !password || !repeatPassword) {
-        if (!email) throw new Error("Не введена почта");
-        if (!username) throw new Error("Не введен логин");
-        if (!password) throw new Error("Не введен пароль");
-        if (!repeatPassword) throw new Error("Не введен повторный пароль");
-      }
-      if (password !== repeatPassword) throw new Error("Пароль не совпадает");
-      handleRegister();
-    } catch (error) {
-      setError(error.message);
     }
   };
 
@@ -127,7 +112,7 @@ function Register() {
           <button
             className={S.primaryButton}
             type="button"
-            onClick={registerCheck}
+            onClick={handleRegister}
             disabled={disabled}
           >
             Зарегистрироваться

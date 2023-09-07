@@ -8,13 +8,15 @@ function MainCenterBlock({
   getError,
   setOpenBar,
   setAudio,
+  favorites,
 }) {
   return (
     <div className={style.main__centerBlock}>
       <CenterBlockSearch />
-      <h2 className={style.centerBlock__title}>Треки</h2>
+      <h2 className={style.centerBlock__title}>{favorites ? "Мой плейлист" : "Треки"}</h2>
       <FilterButton />
       <CenterBlockContent
+        favorites={favorites}
         loading={loading}
         getError={getError}
         setOpenBar={setOpenBar}

@@ -1,49 +1,46 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getLogin, getToken } from "../../api/Api";
+import { addToken, addUser } from "../../store/actions/creators/creators";
 import logo from "../../img/logo-black.png";
 import S from "./Login.module.css";
-import { getLogin } from "../../api/Api";
-import { useUserContext } from "../../components/Contexts/Contexts";
 
 function Login() {
   const [disabled, setDisabled] = useState(false);
   const [errorLog, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { toggleUser } = useUserContext();
 
-  const getLoginCheck = (newUser) => {
-    if (newUser.detail) {
-      setError(newUser.detail);
-      return;
-    }
+  const validateInput = () => {
+    if (!email) throw new Error("Не введена почта");
+    if (!password) throw new Error("Не введен пароль");
+  };
 
-    toggleUser(newUser);
-    navigate("/");
+  const getError = (newUser) => {
+    if (newUser.email) throw new Error(newUser.email[0]);
+    if (newUser.username) throw new Error(newUser.username[0]);
+    if (newUser.password) throw new Error(newUser.password[0]);
+    if (newUser.detail) throw new Error(newUser.detail);
   };
 
   const handleLogin = async () => {
     try {
+      validateInput();
       setDisabled(true);
-      const response = await getLogin({ email, password });
-      getLoginCheck(response);
+      const newUser = await getLogin({ email, password });
+      if (!newUser.id) getError(newUser);
+      const newToken = await getToken({ email, password });
+      localStorage.setItem("user", JSON.stringify(newUser));
+      dispatch(addUser(newUser));
+      dispatch(addToken(newToken));
+      navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
       setDisabled(false);
-    }
-  };
-
-  const loginCheck = () => {
-    try {
-      if (!email || !password) {
-        if (!email) throw new Error("Не введена почта");
-        if (!password) throw new Error("Не введен пароль");
-      }
-      handleLogin();
-    } catch (error) {
-      setError(error.message);
     }
   };
 
@@ -86,7 +83,7 @@ function Login() {
           <button
             className={S.primaryButton}
             type="button"
-            onClick={loginCheck}
+            onClick={handleLogin}
             disabled={disabled}
           >
             Войти

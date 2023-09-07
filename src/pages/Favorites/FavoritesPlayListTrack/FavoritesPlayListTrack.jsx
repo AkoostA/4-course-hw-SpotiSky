@@ -1,27 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import S from "./playListTrack.module.css";
-import sprite from "../../../img/icon/sprite.svg";
-import Skeleton from "../../Skeleton";
-import addTracks, {
+import { useNavigate } from "react-router-dom";
+import {
   addActiveTrack,
+  addFavoritesTracks,
   addPlayTrack,
 } from "../../../store/actions/creators/creators";
-import allTracksSelector, {
+import {
   activeTrackSelector,
+  favoritesTracksSelector,
   playTrackSelector,
   tokenSelector,
-  userSelector,
 } from "../../../store/selectors/selectors";
-import formatTime from "../../Helper/Helper";
-import getTrackAll, { addLike, disLike } from "../../../api/Api";
+import sprite from "../../../img/icon/sprite.svg";
+import Skeleton from "../../../components/Skeleton";
+import formatTime from "../../../components/Helper/Helper";
+import S from "./FavoritesPlayListTrack.module.css";
+import { disLike, getFavoritesTracks } from "../../../api/Api";
 
-function PlayListTrack({ loading, getError }) {
+export default function FavoritesPlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
-  const user = useSelector(userSelector);
   const token = useSelector(tokenSelector);
-  const allTrack = useSelector(allTracksSelector);
+  const favoritesTracks = useSelector(favoritesTracksSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
@@ -29,19 +29,15 @@ function PlayListTrack({ loading, getError }) {
 
   const toggleTrack = (i) => {
     dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
-    dispatch(addPlayTrack(allTrack[i]));
+    dispatch(addPlayTrack(favoritesTracks[i]));
   };
 
   const toggleLike = async (track) => {
     try {
       setDisabled(true);
-      if (track.stared_user.find((el) => el.id === user.id)) {
-        await disLike({ token: token.access, id: track.id });
-      } else {
-        await addLike({ token: token.access, id: track.id });
-      }
-      const response = await getTrackAll();
-      dispatch(addTracks(response));
+      await disLike({ token: token.access, id: track.id });
+      const response = await getFavoritesTracks(token.access);
+      dispatch(addFavoritesTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
         localStorage.clear();
@@ -59,6 +55,18 @@ function PlayListTrack({ loading, getError }) {
         <div className={S.playlist__item}>
           <div className={S.playlist__track}>
             <h1>{getError}</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!favoritesTracks[0]) {
+    return (
+      <div className={S.content__playlist}>
+        <div className={S.playlist__item}>
+          <div className={S.playlist__track}>
+            <h1>В этом плейлисте нет треков</h1>
           </div>
         </div>
       </div>
@@ -89,7 +97,7 @@ function PlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          allTrack.map((track, index) => (
+          favoritesTracks.map((track, index) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
@@ -143,11 +151,7 @@ function PlayListTrack({ loading, getError }) {
                   className={S.track__buttonLike}
                 >
                   <svg className={S.track__timeSvg} alt="time">
-                    {track.stared_user.find((el) => el.id === user.id) ? (
-                      <use xlinkHref={`${sprite}#icon-likeActive`} />
-                    ) : (
-                      <use xlinkHref={`${sprite}#icon-like`} />
-                    )}
+                    <use xlinkHref={`${sprite}#icon-likeActive`} />
                   </svg>
                 </button>
                 <span className={S.track__timeText}>
@@ -161,5 +165,3 @@ function PlayListTrack({ loading, getError }) {
     </div>
   );
 }
-
-export default PlayListTrack;

@@ -32,14 +32,16 @@ function PlayerProgress({ audioRef }) {
   });
 
   useEffect(() => {
-    audioRef.current.addEventListener("timeupdate", () => {
-      setValue(audioRef.current.currentTime);
-      return () => {
-        audioRef.current.removeEventListener("timeupdate", () => {
-          setValue(audioRef.current.currentTime);
-        });
-      };
-    });
+    if (audioRef?.current.currentTime) {
+      audioRef.current.addEventListener("timeupdate", () => {
+        setValue(audioRef.current.currentTime);
+        return () => {
+          audioRef.current.removeEventListener("timeupdate", () => {
+            setValue(audioRef.current.currentTime);
+          });
+        };
+      });
+    }
   });
 
   useEffect(() => {

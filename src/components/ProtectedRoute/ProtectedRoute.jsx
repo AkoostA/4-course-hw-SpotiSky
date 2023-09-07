@@ -1,8 +1,9 @@
-import { Navigate, Outlet  } from "react-router-dom";
-import { useUserContext } from "../Contexts/Contexts";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+import { userSelector } from "../../store/selectors/selectors";
 
 function ProtectedRoute() {
-  const { user } = useUserContext();
+  const user = useSelector(userSelector);
 
   if (!user) {
     return <Navigate to="/login" replace />;
