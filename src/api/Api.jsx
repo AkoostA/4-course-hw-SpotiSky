@@ -1,5 +1,7 @@
+const apiAddress = "https://skypro-music-api.skyeng.tech";
+
 export default function getTrackAll() {
-  return fetch("https://painassasin.online/catalog/track/all/", {
+  return fetch(`${apiAddress}/catalog/track/all/`, {
     method: "GET",
   }).then((response) => {
     if (response.status !== 200)
@@ -9,7 +11,7 @@ export default function getTrackAll() {
 }
 
 export function getRegister({ email, username, password }) {
-  return fetch("https://painassasin.online/user/signup/", {
+  return fetch(`${apiAddress}/user/signup/`, {
     method: "POST",
     body: JSON.stringify({
       email,
@@ -26,7 +28,7 @@ export function getRegister({ email, username, password }) {
 }
 
 export function getLogin({ email, password }) {
-  return fetch("https://painassasin.online/user/login/", {
+  return fetch(`${apiAddress}/user/login/`, {
     method: "POST",
     body: JSON.stringify({
       email,
@@ -42,7 +44,7 @@ export function getLogin({ email, password }) {
 }
 
 export function getCategory({ id }) {
-  return fetch(`https://painassasin.online/catalog/selection/${id}`, {
+  return fetch(`${apiAddress}/catalog/selection/${id}`, {
     method: "GET",
   }).then((response) => {
     if (response.status === 401)
@@ -52,7 +54,7 @@ export function getCategory({ id }) {
 }
 
 export function getFavoritesTracks(token) {
-  return fetch("https://painassasin.online/catalog/track/favorite/all/", {
+  return fetch(`${apiAddress}/catalog/track/favorite/all/`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -64,7 +66,7 @@ export function getFavoritesTracks(token) {
 }
 
 export function getToken({ email, password }) {
-  return fetch("https://painassasin.online/user/token/", {
+  return fetch(`${apiAddress}/user/token/`, {
     method: "POST",
     body: JSON.stringify({
       email,
@@ -77,7 +79,7 @@ export function getToken({ email, password }) {
 }
 
 export function refreshToken(token) {
-  return fetch("https://painassasin.online/user/token/refresh/", {
+  return fetch(`${apiAddress}/user/token/refresh/`, {
     method: "POST",
     body: JSON.stringify({
       refresh: { token },
@@ -89,7 +91,7 @@ export function refreshToken(token) {
 }
 
 export function addLike({ token, id }) {
-  return fetch(`https://painassasin.online/catalog/track/${id}/favorite/`, {
+  return fetch(`${apiAddress}/catalog/track/${id}/favorite/`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -101,7 +103,7 @@ export function addLike({ token, id }) {
 }
 
 export function disLike({ token, id }) {
-  return fetch(`https://painassasin.online/catalog/track/${id}/favorite/`, {
+  return fetch(`${apiAddress}/catalog/track/${id}/favorite/`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
