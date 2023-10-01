@@ -39,7 +39,7 @@ function Favorites() {
   return (
     <main className={S.main}>
       <MainNav />
-      <MainCenterBlock favorites loading={loading} getError={getError} />
+      <MainCenterBlock playList="Мой плейлист" loading={loading} getError={getError} />
       <MainSidebar loading={loading} />
     </main>
   );

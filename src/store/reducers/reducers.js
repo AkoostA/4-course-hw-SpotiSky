@@ -8,6 +8,7 @@ import {
   ADD_USER,
   FAVORITES_TRACKS,
   NEXT_AND_PREV_TRACK,
+  ADD_CATEGORY_PLAYLIST,
 } from "../actions/types/types";
 
 const initialTracks = {
@@ -20,6 +21,7 @@ const initialTracks = {
     prevPlayList: "",
   },
   shuffleTracks: [],
+  categoryPlayList: {},
   favoriteTracks: [],
 };
 
@@ -125,6 +127,16 @@ function tracksReducer(state = initialTracks, action) {
         },
       };
     }
+
+    case ADD_CATEGORY_PLAYLIST: {
+      const { categoryPlayList } = action.payload;
+
+      return {
+        ...state,
+        categoryPlayList,
+      };
+    }
+
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import {
   ADD_USER,
   FAVORITES_TRACKS,
   NEXT_AND_PREV_TRACK,
+  ADD_CATEGORY_PLAYLIST,
 } from "../types/types";
 
 const addTracks = (tracks) => ({
@@ -39,7 +40,12 @@ export const addFavoriteTracks = (favoriteTracks) => ({
 
 export const addNextOrPrevTrack = (nextOrPrev) => ({
   type: NEXT_AND_PREV_TRACK,
-  payload: {nextOrPrev}
+  payload: { nextOrPrev },
+});
+
+export const addCategoryPlayList = (categoryPlayList) => ({
+  type: ADD_CATEGORY_PLAYLIST,
+  payload: { categoryPlayList },
 });
 
 export default addTracks;

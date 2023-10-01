@@ -38,6 +38,9 @@ export function currentPlayList(state) {
     case "favoriteTracks":
       playList = state.favoriteTracks;
       break;
+    case "categoryPlayList":
+      playList = state.categoryPlayList.items;
+      break;
     default:
       break;
   }

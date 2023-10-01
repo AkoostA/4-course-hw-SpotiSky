@@ -30,7 +30,7 @@ function Main() {
   return (
     <main className={S.main}>
       <MainNav />
-      <MainCenterBlock loading={loading} getError={getError} />
+      <MainCenterBlock playList="Треки" loading={loading} getError={getError} />
       <MainSidebar loading={loading} />
     </main>
   );
