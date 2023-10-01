@@ -2,20 +2,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import style from "./playerControls.module.css";
 import sprite from "../../../img/icon/sprite.svg";
-import allTracksSelector, {
-  activeTrackSelector,
-  shuffleTracksSelector,
-} from "../../../store/selectors/selectors";
+import { activeTrackSelector } from "../../../store/selectors/selectors";
 import {
   addActiveTrack,
-  addPlayTrack,
+  addNextOrPrevTrack,
   addShuffleTracks,
 } from "../../../store/actions/creators/creators";
 
 function PlayerControls({ audioRef, repeat, setRepeat }) {
-  const allTracks = useSelector(allTracksSelector);
   const activeTrack = useSelector(activeTrackSelector);
-  const shuffleTracks = useSelector(shuffleTracksSelector);
   const dispatch = useDispatch();
 
   const audioControl = (text) => {
@@ -25,19 +20,7 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
           audioRef.current.currentTime = 0;
           return;
         }
-        if (activeTrack.index === 0 || activeTrack.index === "shuffle") return;
-        dispatch(
-          addActiveTrack({
-            ...activeTrack,
-            active: true,
-            index: activeTrack.index - 1,
-          })
-        );
-        if (activeTrack.shuffle) {
-          dispatch(addPlayTrack(shuffleTracks[activeTrack.index - 1]));
-        } else {
-          dispatch(addPlayTrack(allTracks[activeTrack.index - 1]));
-        }
+        dispatch(addNextOrPrevTrack("prev"));
         break;
       case "play":
         audioRef.current.play();
@@ -48,45 +31,13 @@ function PlayerControls({ audioRef, repeat, setRepeat }) {
         dispatch(addActiveTrack({ ...activeTrack, active: false }));
         break;
       case "next":
-        if (activeTrack.index === allTracks.length - 1) return;
-        if (activeTrack.index === "shuffle") {
-          dispatch(addPlayTrack(shuffleTracks[0]));
-          dispatch(
-            addActiveTrack({
-              ...activeTrack,
-              active: true,
-              index: 0,
-            })
-          );
-          return;
-        }
-        dispatch(
-          addActiveTrack({
-            ...activeTrack,
-            active: true,
-            index: activeTrack.index + 1,
-          })
-        );
-        if (activeTrack.shuffle) {
-          dispatch(addPlayTrack(shuffleTracks[activeTrack.index + 1]));
-        } else {
-          dispatch(addPlayTrack(allTracks[activeTrack.index + 1]));
-        }
+        dispatch(addNextOrPrevTrack("next"));
         break;
       case "repeat":
         setRepeat(!repeat);
         break;
       case "shuffle":
-        if (activeTrack.shuffle) {
-          dispatch(addActiveTrack({ ...activeTrack, shuffle: false }));
-        } else {
-          dispatch(
-            addActiveTrack({ ...activeTrack, shuffle: true, index: "shuffle" })
-          );
-          const newShuffleTracks = allTracks.map((track) => track);
-          newShuffleTracks.sort(() => Math.random() - 0.5);
-          dispatch(addShuffleTracks(newShuffleTracks));
-        }
+        dispatch(addShuffleTracks());
         break;
       default:
         break;

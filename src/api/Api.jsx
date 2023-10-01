@@ -82,7 +82,7 @@ export function refreshToken(token) {
   return fetch(`${apiAddress}/user/token/refresh/`, {
     method: "POST",
     body: JSON.stringify({
-      refresh: { token },
+      refresh: token,
     }),
     headers: {
       "content-type": "application/json",

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   addActiveTrack,
   addFavoritesTracks,
   addPlayTrack,
+  addToken,
 } from "../../../store/actions/creators/creators";
 import {
   activeTrackSelector,
@@ -16,7 +16,7 @@ import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../../components/Skeleton";
 import formatTime from "../../../components/Helper/Helper";
 import S from "./FavoritesPlayListTrack.module.css";
-import { disLike, getFavoritesTracks } from "../../../api/Api";
+import { disLike, getFavoritesTracks, refreshToken } from "../../../api/Api";
 
 export default function FavoritesPlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
@@ -25,7 +25,6 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const toggleTrack = (i) => {
     dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
@@ -40,9 +39,12 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
       dispatch(addFavoritesTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
-        localStorage.clear();
-        dispatch(addPlayTrack({}));
-        navigate("/login");
+        const newAccess = await refreshToken(token.refresh);
+        dispatch(addToken({ ...token, access: newAccess.access }));
+        await disLike({ token: token.access, id: track.id });
+        const response = await getFavoritesTracks(newAccess.access);
+        dispatch(addFavoritesTracks(response));
+        return;
       }
     } finally {
       setDisabled(false);

@@ -5,3 +5,4 @@ export const SHUFFLE_TRACKS = "SHUFFLE_TRACK";
 export const ADD_USER = "ADD_USER";
 export const FAVORITES_TRACKS = "FAVORITES_TRACKS";
 export const ADD_TOKEN = "ADD_TOKEN";
+export const NEXT_AND_PREV_TRACK = "NEXT_AND_PREV_TRACK";

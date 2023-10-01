@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import S from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
@@ -7,6 +6,7 @@ import Skeleton from "../../Skeleton";
 import addTracks, {
   addActiveTrack,
   addPlayTrack,
+  addToken,
 } from "../../../store/actions/creators/creators";
 import allTracksSelector, {
   activeTrackSelector,
@@ -15,7 +15,7 @@ import allTracksSelector, {
   userSelector,
 } from "../../../store/selectors/selectors";
 import formatTime from "../../Helper/Helper";
-import getTrackAll, { addLike, disLike } from "../../../api/Api";
+import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api";
 
 function PlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
@@ -25,11 +25,17 @@ function PlayListTrack({ loading, getError }) {
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const toggleTrack = (i) => {
-    dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
-    dispatch(addPlayTrack(allTrack[i]));
+  const toggleTrack = (track) => {
+    dispatch(
+      addActiveTrack({
+        ...activeTrack,
+        playList: "allTracks",
+        active: true,
+        idTrack: track.id,
+      })
+    );
+    dispatch(addPlayTrack(track));
   };
 
   const toggleLike = async (track) => {
@@ -44,9 +50,16 @@ function PlayListTrack({ loading, getError }) {
       dispatch(addTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
-        localStorage.clear();
-        dispatch(addPlayTrack({}));
-        navigate("/login");
+        const newAccess = await refreshToken(token.refresh);
+        dispatch(addToken({ ...token, access: newAccess.access }));
+        if (track.stared_user.find((el) => el.id === user.id)) {
+          await disLike({ token: newAccess.access, id: track.id });
+        } else {
+          await addLike({ token: newAccess.access, id: track.id });
+        }
+        const response = await getTrackAll();
+        dispatch(addTracks(response));
+        return;
       }
     } finally {
       setDisabled(false);
@@ -89,7 +102,7 @@ function PlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          allTrack.map((track, index) => (
+          allTrack.map((track) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
@@ -110,7 +123,7 @@ function PlayListTrack({ loading, getError }) {
                 <div className={S.titleText}>
                   <button
                     type="button"
-                    onClick={() => toggleTrack(index)}
+                    onClick={() => toggleTrack(track)}
                     className={S.track__titleLink}
                   >
                     {track.name} <span className={S.track__titleSpan} />
@@ -120,7 +133,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__author}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__authorLink}
                 >
                   {track.author}
@@ -129,7 +142,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__album}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__albumLink}
                 >
                   {track.album}

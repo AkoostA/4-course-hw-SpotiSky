@@ -28,8 +28,8 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      validateInput();
       setDisabled(true);
+      validateInput();
       const newUser = await getLogin({ email, password });
       if (!newUser.id) getError(newUser);
       const newToken = await getToken({ email, password });
