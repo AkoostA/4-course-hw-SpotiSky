@@ -5,7 +5,6 @@ import {
   SHUFFLE_TRACKS,
   ADD_USER,
   FAVORITES_TRACKS,
-  ADD_TOKEN,
   NEXT_AND_PREV_TRACK,
 } from "../types/types";
 
@@ -33,14 +32,9 @@ export const addUser = (user) => ({
   payload: { user },
 });
 
-export const addFavoritesTracks = (favoriteTracks) => ({
+export const addFavoriteTracks = (favoriteTracks) => ({
   type: FAVORITES_TRACKS,
   payload: { favoriteTracks },
-});
-
-export const addToken = (token) => ({
-  type: ADD_TOKEN,
-  payload: { token },
 });
 
 export const addNextOrPrevTrack = (nextOrPrev) => ({

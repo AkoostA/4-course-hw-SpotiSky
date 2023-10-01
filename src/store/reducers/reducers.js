@@ -7,7 +7,6 @@ import {
   SHUFFLE_TRACKS,
   ADD_USER,
   FAVORITES_TRACKS,
-  ADD_TOKEN,
   NEXT_AND_PREV_TRACK,
 } from "../actions/types/types";
 
@@ -22,7 +21,6 @@ const initialTracks = {
   },
   shuffleTracks: [],
   favoriteTracks: [],
-  token: {},
 };
 
 function tracksReducer(state = initialTracks, action) {
@@ -35,6 +33,7 @@ function tracksReducer(state = initialTracks, action) {
         user,
       };
     }
+
     case ADD_TRACK: {
       const { tracks } = action.payload;
 
@@ -43,6 +42,7 @@ function tracksReducer(state = initialTracks, action) {
         allTracks: tracks,
       };
     }
+
     case PLAY_TRACK: {
       const { playTrack } = action.payload;
 
@@ -51,6 +51,7 @@ function tracksReducer(state = initialTracks, action) {
         playTrack,
       };
     }
+
     case ACTIVE_TRACK: {
       const { activeTrack } = action.payload;
 
@@ -59,6 +60,7 @@ function tracksReducer(state = initialTracks, action) {
         activeTrack,
       };
     }
+
     case SHUFFLE_TRACKS: {
       if (state.activeTrack.shuffle)
         return {
@@ -84,10 +86,11 @@ function tracksReducer(state = initialTracks, action) {
           playList: "shuffleTracks",
           prevPlayList,
           shuffle: true,
-          idTrack: "newShuffle",
+          idTrack: "newId",
         },
       };
     }
+
     case FAVORITES_TRACKS: {
       const { favoriteTracks } = action.payload;
 
@@ -96,14 +99,7 @@ function tracksReducer(state = initialTracks, action) {
         favoriteTracks,
       };
     }
-    case ADD_TOKEN: {
-      const { token } = action.payload;
 
-      return {
-        ...state,
-        token,
-      };
-    }
     case NEXT_AND_PREV_TRACK: {
       const { nextOrPrev } = action.payload;
       const playList = currentPlayList(state);

@@ -2,48 +2,54 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
   addActiveTrack,
-  addFavoritesTracks,
+  addFavoriteTracks,
   addPlayTrack,
-  addToken,
 } from "../../../store/actions/creators/creators";
 import {
   activeTrackSelector,
   favoritesTracksSelector,
   playTrackSelector,
-  tokenSelector,
 } from "../../../store/selectors/selectors";
 import sprite from "../../../img/icon/sprite.svg";
 import Skeleton from "../../../components/Skeleton";
 import formatTime from "../../../components/Helper/Helper";
 import S from "./FavoritesPlayListTrack.module.css";
-import { disLike, getFavoritesTracks, refreshToken } from "../../../api/Api";
+import { disLike, getFavoriteTracks, refreshToken } from "../../../api/Api";
 
 export default function FavoritesPlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
-  const token = useSelector(tokenSelector);
   const favoritesTracks = useSelector(favoritesTracksSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
+  const tokenRefresh = JSON.parse(localStorage.getItem("tokenRefresh"));
+  const tokenAccess = JSON.parse(localStorage.getItem("tokenAccess"));
 
-  const toggleTrack = (i) => {
-    dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
-    dispatch(addPlayTrack(favoritesTracks[i]));
+  const toggleTrack = (track) => {
+    dispatch(
+      addActiveTrack({
+        ...activeTrack,
+        playList: "favoriteTracks",
+        active: true,
+        idTrack: track.id,
+      })
+    );
+    dispatch(addPlayTrack(track));
   };
 
   const toggleLike = async (track) => {
     try {
       setDisabled(true);
-      await disLike({ token: token.access, id: track.id });
-      const response = await getFavoritesTracks(token.access);
-      dispatch(addFavoritesTracks(response));
+      await disLike({ token: tokenAccess, id: track.id });
+      const response = await getFavoriteTracks(tokenAccess);
+      dispatch(addFavoriteTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
-        const newAccess = await refreshToken(token.refresh);
-        dispatch(addToken({ ...token, access: newAccess.access }));
-        await disLike({ token: token.access, id: track.id });
-        const response = await getFavoritesTracks(newAccess.access);
-        dispatch(addFavoritesTracks(response));
+        const newAccess = await refreshToken(tokenRefresh);
+        localStorage.setItem("tokenAccess", JSON.stringify(newAccess));
+        await disLike({ token: newAccess.access, id: track.id });
+        const response = await getFavoriteTracks(newAccess.access);
+        dispatch(addFavoriteTracks(response));
         return;
       }
     } finally {
@@ -99,7 +105,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          favoritesTracks.map((track, index) => (
+          favoritesTracks.map((track) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
@@ -120,7 +126,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
                 <div className={S.titleText}>
                   <button
                     type="button"
-                    onClick={() => toggleTrack(index)}
+                    onClick={() => toggleTrack(track)}
                     className={S.track__titleLink}
                   >
                     {track.name} <span className={S.track__titleSpan} />
@@ -130,7 +136,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
               <div className={S.track__author}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__authorLink}
                 >
                   {track.author}
@@ -139,7 +145,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
               <div className={S.track__album}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__albumLink}
                 >
                   {track.album}

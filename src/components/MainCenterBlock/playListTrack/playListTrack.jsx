@@ -6,12 +6,10 @@ import Skeleton from "../../Skeleton";
 import addTracks, {
   addActiveTrack,
   addPlayTrack,
-  addToken,
 } from "../../../store/actions/creators/creators";
 import allTracksSelector, {
   activeTrackSelector,
   playTrackSelector,
-  tokenSelector,
   userSelector,
 } from "../../../store/selectors/selectors";
 import formatTime from "../../Helper/Helper";
@@ -20,11 +18,12 @@ import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api";
 function PlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
   const user = useSelector(userSelector);
-  const token = useSelector(tokenSelector);
   const allTrack = useSelector(allTracksSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
+  const tokenRefresh = JSON.parse(localStorage.getItem("tokenRefresh"));
+  const tokenAccess = JSON.parse(localStorage.getItem("tokenAccess"));
 
   const toggleTrack = (track) => {
     dispatch(
@@ -42,16 +41,16 @@ function PlayListTrack({ loading, getError }) {
     try {
       setDisabled(true);
       if (track.stared_user.find((el) => el.id === user.id)) {
-        await disLike({ token: token.access, id: track.id });
+        await disLike({ token: tokenAccess, id: track.id });
       } else {
-        await addLike({ token: token.access, id: track.id });
+        await addLike({ token: tokenAccess, id: track.id });
       }
       const response = await getTrackAll();
       dispatch(addTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
-        const newAccess = await refreshToken(token.refresh);
-        dispatch(addToken({ ...token, access: newAccess.access }));
+        const newAccess = await refreshToken(tokenRefresh);
+        localStorage.setItem("tokenAccess", JSON.stringify(newAccess));
         if (track.stared_user.find((el) => el.id === user.id)) {
           await disLike({ token: newAccess.access, id: track.id });
         } else {

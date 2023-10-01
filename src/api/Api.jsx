@@ -53,7 +53,7 @@ export function getCategory({ id }) {
   });
 }
 
-export function getFavoritesTracks(token) {
+export function getFavoriteTracks(token) {
   return fetch(`${apiAddress}/catalog/track/favorite/all/`, {
     method: "GET",
     headers: {
