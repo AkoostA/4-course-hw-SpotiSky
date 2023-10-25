@@ -1,16 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  activeTrackSelector,
-  tokenSelector,
-} from "../../store/selectors/selectors";
-import { getFavoritesTracks } from "../../api/Api";
-import {
-  addActiveTrack,
-  addFavoritesTracks,
-  addPlayTrack,
-} from "../../store/actions/creators/creators";
+import { getFavoriteTracks, refreshToken } from "../../api/Api";
+import { addFavoriteTracks } from "../../store/actions/creators/creators";
 import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
 import MainNav from "../../components/MainNav/MainNav";
 import MainSidebar from "../../components/MainSidebar/MainSidebar";
@@ -19,21 +10,21 @@ import S from "./Favorites.module.css";
 function Favorites() {
   const [getError, setGetError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const token = useSelector(tokenSelector);
-  const activeTrack = useSelector(activeTrackSelector);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const tokenRefresh = JSON.parse(localStorage.getItem("tokenRefresh"));
+  const tokenAccess = JSON.parse(localStorage.getItem("tokenAccess"));
 
   const asyncGetTrackAll = async () => {
     try {
-      const favoritesTracks = await getFavoritesTracks(token.access);
-      dispatch(addActiveTrack({ ...activeTrack, favoritesPlaylist: true }));
-      dispatch(addFavoritesTracks(favoritesTracks));
+      const favoriteTracks = await getFavoriteTracks(tokenAccess);
+      dispatch(addFavoriteTracks(favoriteTracks));
     } catch (error) {
       if (error.message === "Токен протух") {
-        localStorage.clear();
-        dispatch(addPlayTrack({}));
-        navigate("/login");
+        const newAccess = await refreshToken(tokenRefresh);
+        localStorage.setItem("tokenAccess", JSON.stringify(newAccess));
+        const favoriteTracks = await getFavoriteTracks(newAccess.access);
+        dispatch(addFavoriteTracks(favoriteTracks));
+        return;
       }
       setGetError(error.message);
     } finally {
@@ -48,7 +39,7 @@ function Favorites() {
   return (
     <main className={S.main}>
       <MainNav />
-      <MainCenterBlock favorites loading={loading} getError={getError} />
+      <MainCenterBlock playList="Мой плейлист" loading={loading} getError={getError} />
       <MainSidebar loading={loading} />
     </main>
   );

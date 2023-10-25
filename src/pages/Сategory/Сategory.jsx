@@ -1,76 +1,47 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../api/Api";
-import style from "./Сategory.module.css";
-import sprite from "../../img/icon/sprite.svg";
+import MainCenterBlock from "../../components/MainCenterBlock/MainCenterBlock";
+import MainNav from "../../components/MainNav/MainNav";
+import MainSidebar from "../../components/MainSidebar/MainSidebar";
+import S from "./Сategory.module.css";
+import { addCategoryPlayList } from "../../store/actions/creators/creators";
 
 function Сategory() {
-  const [categoryTrack, setCategoryTrack] = useState();
+  const [getError, setGetError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const params = useParams();
-  const navigate = useNavigate();
-
-  const mainButton = () => {
-    navigate("/", { replace: true });
-  };
+  const categoryName = useSelector(
+    (state) => state.tracks.categoryPlayList.name
+  );
 
   const asyncGetCategory = async () => {
-    const response = await getCategory({ id: params.id });
-    setCategoryTrack(response);
+    try {
+      const response = await getCategory({ id: params.id });
+      dispatch(addCategoryPlayList(response));
+    } catch (error) {
+      setGetError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     asyncGetCategory();
-  }, []);
+  }, [params]);
 
   return (
-    <div className={style.сategory}>
-      <h1 className={style.сategory__header}>Category {params.id} PAGE</h1>
-      <button
-        onClick={mainButton}
-        className={style.сategory__button}
-        type="button"
-      >
-        На Main страницу
-      </button>
-      <div>
-        {categoryTrack
-          ? categoryTrack.items.map((track) => (
-              <div key={track.id} className={style.playlist__track}>
-                <div className={style.track__title}>
-                  <div className={style.track__titleImage}>
-                    <svg className={style.track__titleSvg} alt="music">
-                      <use xlinkHref={`${sprite}#icon-note`} />
-                    </svg>
-                  </div>
-                  <div className={style.titleText}>
-                    <button type="button" className={style.track__titleLink}>
-                      {track.name} <span className={style.track__titleSpan} />
-                    </button>
-                  </div>
-                </div>
-                <div className={style.track__author}>
-                  <button type="button" className={style.track__authorLink}>
-                    {track.author}
-                  </button>
-                </div>
-                <div className={style.track__album}>
-                  <button type="button" className={style.track__albumLink}>
-                    {track.album}
-                  </button>
-                </div>
-                <div className={style.time}>
-                  <svg className={style.track__timeSvg} alt="time">
-                    <use xlinkHref={`${sprite}#icon-like`} />
-                  </svg>
-                  <span className={style.track__timeText}>
-                    {track.duration_in_seconds}
-                  </span>
-                </div>
-              </div>
-            ))
-          : null}
-      </div>
-    </div>
+    <main className={S.main}>
+      <MainNav />
+      <MainCenterBlock
+        playList={categoryName}
+        loading={loading}
+        getError={getError}
+      />
+      <MainSidebar loading={loading} />
+    </main>
   );
 }
 

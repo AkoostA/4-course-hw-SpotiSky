@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLogin, getToken } from "../../api/Api";
-import { addToken, addUser } from "../../store/actions/creators/creators";
+import { addUser } from "../../store/actions/creators/creators";
 import logo from "../../img/logo-black.png";
 import S from "./Login.module.css";
 
@@ -28,14 +28,15 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      validateInput();
       setDisabled(true);
+      validateInput();
       const newUser = await getLogin({ email, password });
       if (!newUser.id) getError(newUser);
       const newToken = await getToken({ email, password });
       localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("tokenRefresh", JSON.stringify(newToken.refresh));
+      localStorage.setItem("tokenAccess", JSON.stringify(newToken.access));
       dispatch(addUser(newUser));
-      dispatch(addToken(newToken));
       navigate("/");
     } catch (error) {
       setError(error.message);

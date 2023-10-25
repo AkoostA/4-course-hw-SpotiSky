@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getRegister, getToken } from "../../api/Api";
-import { addToken, addUser } from "../../store/actions/creators/creators";
+import { addUser } from "../../store/actions/creators/creators";
 import { safeString } from "../../components/Helper/Helper";
 import logo from "../../img/logo-black.png";
 import S from "./Register.module.css";
@@ -43,8 +43,9 @@ function Register() {
       if (!newUser.id) getError(newUser);
       const newToken = await getToken({ email, password });
       localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("tokenRefresh", JSON.stringify(newToken.refresh));
+      localStorage.setItem("tokenAccess", JSON.stringify(newToken.access));
       dispatch(addUser(newUser));
-      dispatch(addToken(newToken));
       navigate("/");
     } catch (error) {
       setError(error.message);

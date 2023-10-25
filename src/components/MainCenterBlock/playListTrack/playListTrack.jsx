@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import S from "./playListTrack.module.css";
 import sprite from "../../../img/icon/sprite.svg";
@@ -11,42 +10,55 @@ import addTracks, {
 import allTracksSelector, {
   activeTrackSelector,
   playTrackSelector,
-  tokenSelector,
   userSelector,
 } from "../../../store/selectors/selectors";
 import formatTime from "../../Helper/Helper";
-import getTrackAll, { addLike, disLike } from "../../../api/Api";
+import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api";
 
 function PlayListTrack({ loading, getError }) {
   const [disabled, setDisabled] = useState(false);
   const user = useSelector(userSelector);
-  const token = useSelector(tokenSelector);
   const allTrack = useSelector(allTracksSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const tokenRefresh = JSON.parse(localStorage.getItem("tokenRefresh"));
+  const tokenAccess = JSON.parse(localStorage.getItem("tokenAccess"));
 
-  const toggleTrack = (i) => {
-    dispatch(addActiveTrack({ ...activeTrack, active: true, index: i }));
-    dispatch(addPlayTrack(allTrack[i]));
+  const toggleTrack = (track) => {
+    dispatch(
+      addActiveTrack({
+        ...activeTrack,
+        playList: "allTracks",
+        active: true,
+        idTrack: track.id,
+      })
+    );
+    dispatch(addPlayTrack(track));
   };
 
   const toggleLike = async (track) => {
     try {
       setDisabled(true);
       if (track.stared_user.find((el) => el.id === user.id)) {
-        await disLike({ token: token.access, id: track.id });
+        await disLike({ token: tokenAccess, id: track.id });
       } else {
-        await addLike({ token: token.access, id: track.id });
+        await addLike({ token: tokenAccess, id: track.id });
       }
       const response = await getTrackAll();
       dispatch(addTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
-        localStorage.clear();
-        dispatch(addPlayTrack({}));
-        navigate("/login");
+        const newAccess = await refreshToken(tokenRefresh);
+        localStorage.setItem("tokenAccess", JSON.stringify(newAccess));
+        if (track.stared_user.find((el) => el.id === user.id)) {
+          await disLike({ token: newAccess.access, id: track.id });
+        } else {
+          await addLike({ token: newAccess.access, id: track.id });
+        }
+        const response = await getTrackAll();
+        dispatch(addTracks(response));
+        return;
       }
     } finally {
       setDisabled(false);
@@ -89,7 +101,7 @@ function PlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          allTrack.map((track, index) => (
+          allTrack.map((track) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
@@ -110,7 +122,7 @@ function PlayListTrack({ loading, getError }) {
                 <div className={S.titleText}>
                   <button
                     type="button"
-                    onClick={() => toggleTrack(index)}
+                    onClick={() => toggleTrack(track)}
                     className={S.track__titleLink}
                   >
                     {track.name} <span className={S.track__titleSpan} />
@@ -120,7 +132,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__author}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__authorLink}
                 >
                   {track.author}
@@ -129,7 +141,7 @@ function PlayListTrack({ loading, getError }) {
               <div className={S.track__album}>
                 <button
                   type="button"
-                  onClick={() => toggleTrack(index)}
+                  onClick={() => toggleTrack(track)}
                   className={S.track__albumLink}
                 >
                   {track.album}

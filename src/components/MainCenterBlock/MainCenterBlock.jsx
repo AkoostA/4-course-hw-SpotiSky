@@ -2,25 +2,22 @@ import style from "./MainCenterBlock.module.css";
 import CenterBlockSearch from "./centerBlockSearch/centerBlockSearch";
 import FilterButton from "./filterButton/filterButton";
 import CenterBlockContent from "./centerBlockContent/centerBlockContent";
+import HeaderName from "./HeaderName/HeaderName";
 
 function MainCenterBlock({
   loading,
   getError,
-  setOpenBar,
-  setAudio,
-  favorites,
+  playList,
 }) {
   return (
     <div className={style.main__centerBlock}>
       <CenterBlockSearch />
-      <h2 className={style.centerBlock__title}>{favorites ? "Мой плейлист" : "Треки"}</h2>
+      <HeaderName playList={playList} loading={loading} />
       <FilterButton />
       <CenterBlockContent
-        favorites={favorites}
+        playList={playList}
         loading={loading}
         getError={getError}
-        setOpenBar={setOpenBar}
-        setAudio={setAudio}
       />
     </div>
   );

@@ -1,33 +1,20 @@
 import style from "./centerBlockContent.module.css";
 import ContentTitle from "../contentTitle/contentTitle";
-import PlayListTrack from "../playListTrack/playListTrack";
-import FavoritesPlayListTrack from "../../../pages/Favorites/FavoritesPlayListTrack/FavoritesPlayListTrack";
+import PlayListFilter from "../PlayListFilter/PlayListFilter";
 
 function CenterBlockContent({
   loading,
   getError,
-  setOpenBar,
-  setAudio,
-  favorites,
+  playList,
 }) {
   return (
     <div className={style.centerBlock__content}>
       <ContentTitle />
-      {favorites ? (
-        <FavoritesPlayListTrack
-          loading={loading}
-          getError={getError}
-          setOpenBar={setOpenBar}
-          setAudio={setAudio}
-        />
-      ) : (
-        <PlayListTrack
-          loading={loading}
-          getError={getError}
-          setOpenBar={setOpenBar}
-          setAudio={setAudio}
-        />
-      )}
+      <PlayListFilter
+        playList={playList}
+        loading={loading}
+        getError={getError}
+      />
     </div>
   );
 }

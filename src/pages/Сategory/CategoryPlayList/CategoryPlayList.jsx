@@ -1,24 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import {
+import addTracks, {
   addActiveTrack,
-  addFavoriteTracks,
   addPlayTrack,
 } from "../../../store/actions/creators/creators";
+import Skeleton from "../../../components/Skeleton";
+import sprite from "../../../img/icon/sprite.svg";
+import S from "./CategoryPlayList.module.css";
+import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api";
 import {
   activeTrackSelector,
-  favoritesTracksSelector,
+  categoryTracksSelector,
   playTrackSelector,
+  userSelector,
 } from "../../../store/selectors/selectors";
-import sprite from "../../../img/icon/sprite.svg";
-import Skeleton from "../../../components/Skeleton";
 import formatTime from "../../../components/Helper/Helper";
-import S from "./FavoritesPlayListTrack.module.css";
-import { disLike, getFavoriteTracks, refreshToken } from "../../../api/Api";
 
-export default function FavoritesPlayListTrack({ loading, getError }) {
+function CategoryPlayList({ loading, getError }) {
+  const categoryPlayList = useSelector(categoryTracksSelector);
   const [disabled, setDisabled] = useState(false);
-  const favoritesTracks = useSelector(favoritesTracksSelector);
+  const user = useSelector(userSelector);
   const playTrack = useSelector(playTrackSelector);
   const activeTrack = useSelector(activeTrackSelector);
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
     dispatch(
       addActiveTrack({
         ...activeTrack,
-        playList: "favoriteTracks",
+        playList: "categoryPlayList",
         active: true,
         idTrack: track.id,
       })
@@ -40,16 +41,24 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
   const toggleLike = async (track) => {
     try {
       setDisabled(true);
-      await disLike({ token: tokenAccess, id: track.id });
-      const response = await getFavoriteTracks(tokenAccess);
-      dispatch(addFavoriteTracks(response));
+      if (track.stared_user.find((el) => el.id === user.id)) {
+        await disLike({ token: tokenAccess, id: track.id });
+      } else {
+        await addLike({ token: tokenAccess, id: track.id });
+      }
+      const response = await getTrackAll();
+      dispatch(addTracks(response));
     } catch (error) {
       if (error.message === "Токен протух") {
         const newAccess = await refreshToken(tokenRefresh);
         localStorage.setItem("tokenAccess", JSON.stringify(newAccess));
-        await disLike({ token: newAccess.access, id: track.id });
-        const response = await getFavoriteTracks(newAccess.access);
-        dispatch(addFavoriteTracks(response));
+        if (track.stared_user.find((el) => el.id === user.id)) {
+          await disLike({ token: newAccess.access, id: track.id });
+        } else {
+          await addLike({ token: newAccess.access, id: track.id });
+        }
+        const response = await getTrackAll();
+        dispatch(addTracks(response));
         return;
       }
     } finally {
@@ -63,18 +72,6 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
         <div className={S.playlist__item}>
           <div className={S.playlist__track}>
             <h1>{getError}</h1>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!favoritesTracks[0]) {
-    return (
-      <div className={S.content__playlist}>
-        <div className={S.playlist__item}>
-          <div className={S.playlist__track}>
-            <h1>В этом плейлисте нет треков</h1>
           </div>
         </div>
       </div>
@@ -105,7 +102,7 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          favoritesTracks.map((track) => (
+          categoryPlayList.map((track) => (
             <div key={track.id} className={S.playlist__track}>
               <div className={S.track__title}>
                 <div className={S.track__titleImage}>
@@ -159,7 +156,11 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
                   className={S.track__buttonLike}
                 >
                   <svg className={S.track__timeSvg} alt="time">
-                    <use xlinkHref={`${sprite}#icon-likeActive`} />
+                    {track.stared_user.find((el) => el.id === user.id) ? (
+                      <use xlinkHref={`${sprite}#icon-likeActive`} />
+                    ) : (
+                      <use xlinkHref={`${sprite}#icon-like`} />
+                    )}
                   </svg>
                 </button>
                 <span className={S.track__timeText}>
@@ -173,3 +174,5 @@ export default function FavoritesPlayListTrack({ loading, getError }) {
     </div>
   );
 }
+
+export default CategoryPlayList;

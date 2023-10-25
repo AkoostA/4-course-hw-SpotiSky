@@ -25,4 +25,27 @@ export function lowString(string) {
   return validateString;
 }
 
+export function currentPlayList(state) {
+  let playList;
+
+  switch (state.activeTrack.playList) {
+    case "allTracks":
+      playList = state.allTracks;
+      break;
+    case "shuffleTracks":
+      playList = state.shuffleTracks;
+      break;
+    case "favoriteTracks":
+      playList = state.favoriteTracks;
+      break;
+    case "categoryPlayList":
+      playList = state.categoryPlayList.items;
+      break;
+    default:
+      break;
+  }
+
+  return playList;
+}
+
 export default formatTime;
